@@ -13,5 +13,9 @@ import { ProductCategoryComponent } from './product-category/product-category.co
 
 
 export class ProductsComponent {
-    products: string[] = ['amplifiers', 'german basses']
+    categories: string[] = ['amplifiers', 'german basses']
+
+    onCategorySelected(category: string) {
+        console.log(category)
+    }
 }
