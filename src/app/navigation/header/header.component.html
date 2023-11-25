@@ -10,12 +10,17 @@
                 routerLink="atelier"
                 [routerLinkActiveOptions]="{exact:true}">atelier</a></li>
     </ul>
+    <ul class="user">
+        <li *ngIf="user$|async">{{(user$|async).email}}</li>
+    </ul>
     <ul class="toolbar-list-right">
-        <li class="toolbar-list-item"
+        <li *ngIf="!(user$|async)"
+            class="toolbar-list-item"
             (click)="onLogIn()">
             <span class="material-icons">login</span>
         </li>
-        <li class="toolbar-list-item"
+        <li *ngIf="(user$|async)"
+            class="toolbar-list-item"
             (click)="onLogOut()">
             <span class="material-icons">logout</span>
         </li>
