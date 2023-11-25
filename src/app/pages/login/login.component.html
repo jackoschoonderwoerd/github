@@ -1,0 +1,21 @@
+<div class="page">
+    <form [formGroup]="form">
+        <mat-form-field>
+            <input matInput
+                formControlName="email"
+                type="text"
+                matInput
+                placeholder="email">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text"
+                matInput
+                formControlName="password"
+                placeholder="password">
+        </mat-form-field>
+        <button mat-raised-button
+            color="primary"
+            (click)="onSubmit()">submit
+        </button>
+    </form>
+</div>
