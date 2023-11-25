@@ -29,4 +29,7 @@ export class ProductsComponent {
     onCategorySelected(category: string) {
         this.store.dispatch(new ADMIN.SetCategory(category))
     }
+    onAddCategory() {
+
+    }
 }
