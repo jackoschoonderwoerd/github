@@ -9,6 +9,10 @@
         <li class="toolbar-list-item"><a routerLinkActive="link-active"
                 routerLink="atelier"
                 [routerLinkActiveOptions]="{exact:true}">atelier</a></li>
+        <li *ngIf="(user$|async)"
+            class="toolbar-list-item"><a routerLinkActive="link-active"
+                routerLink="products"
+                [routerLinkActiveOptions]="{exact:true}">products</a></li>
     </ul>
     <ul class="user">
         <li *ngIf="user$|async">{{(user$|async).email}}</li>

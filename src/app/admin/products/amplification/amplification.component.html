@@ -1,0 +1,15 @@
+<div class="page">
+    <form [formGroup]="form">
+        <mat-form-field>
+            <input type="text"
+                formContolName="brand"
+                matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Amplifier type</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let amplifierType of amplifierTypes">{{amplifierType}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+</div>
