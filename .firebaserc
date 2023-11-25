@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "github-9e052": {
+      "hosting": {
+        "github": [
+          "github-9e052"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "github-9e052"
+  }
+}

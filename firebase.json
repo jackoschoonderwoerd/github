@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "github",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}
