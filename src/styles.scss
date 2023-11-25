@@ -3,6 +3,7 @@
 html,
 body {
     height: 100%;
+    background-color: lightgray;
 }
 body {
     margin: 0;
@@ -28,4 +29,11 @@ ul {
 li {
     padding: 0;
     margin: 0;
+}
+.page {
+    padding: 3rem;
+}
+.nested-component {
+    padding: 1rem;
+    border: 1px solid darkgray;
 }

@@ -2,8 +2,9 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { AtelierComponent } from './pages/atelier/atelier.component';
 import { ContactComponent } from './pages/contact/contact.component';
+
+import { ProductsComponent } from './admin/product-categories/product-categories.component';
 import { LoginComponent } from './admin/login/login.component';
-import { ProductsComponent } from './admin/products/products.component';
 
 
 
