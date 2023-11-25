@@ -7,14 +7,17 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideStore } from '@ngrx/store';
+import { reducers } from './app.reducer';
 
 export const appConfig: ApplicationConfig = {
     providers: [
-    provideRouter(routes),
-    importProvidersFrom(provideFirebaseApp(() => initializeApp(environment.firebase))),
-    importProvidersFrom(provideAuth(() => getAuth())),
-    importProvidersFrom(provideFirestore(() => getFirestore())),
-    importProvidersFrom(provideStorage(() => getStorage())),
-    provideAnimations()
-]
+        provideRouter(routes),
+        importProvidersFrom(provideFirebaseApp(() => initializeApp(environment.firebase))),
+        importProvidersFrom(provideAuth(() => getAuth())),
+        importProvidersFrom(provideFirestore(() => getFirestore())),
+        importProvidersFrom(provideStorage(() => getStorage())),
+        provideAnimations(),
+        provideStore(reducers)
+    ]
 };

@@ -1,6 +1,11 @@
 .app-product-categories {
     display: grid;
     grid-template-columns: 1fr 4fr;
-    .products-list {
+    .categories-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.3rem;
+        .categories-list-item {
+        }
     }
 }

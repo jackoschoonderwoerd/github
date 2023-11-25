@@ -1,8 +1,11 @@
 <div class="page app-product-categories">
     <ul class="categories-list">
         <li class="categories-list-item"
-            *ngFor="let category of categories"
-            (click)="onCategorySelected(category)">{{category}}</li>
+            *ngFor="let category of categories">
+            <button (click)="onCategorySelected(category)"
+                mat-raised-button
+                color="primary">{{category}}</button>
+        </li>
     </ul>
     <app-product-category></app-product-category>
 </div>
