@@ -1,0 +1,14 @@
+.warning {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    .buttons {
+        width: 100%;
+        display: flex;
+
+        gap: 1rem;
+        button {
+            width: 100%;
+        }
+    }
+}

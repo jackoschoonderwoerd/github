@@ -1,0 +1,32 @@
+<div class="app-add-dialog">
+
+    {{(category$|async)?.name}}
+
+    <form [formGroup]="form">
+
+        <mat-form-field>
+            <input type="text"
+                matInput
+                formControlName="name"
+                placeholder="name">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="text"
+                matInput
+                formControlName="description"
+                placeholder="description">
+        </mat-form-field>
+        <mat-form-field>
+            <input type="number"
+                matInput
+                formControlName="price"
+                placeholder="price">
+        </mat-form-field>
+        <button mat-raised-button
+            color="primary"
+            (click)="onAddProduct()">add product</button>
+        <button mat-raised-button
+            color="primary"
+            (click)="onCancel()">cancel</button>
+    </form>
+</div>

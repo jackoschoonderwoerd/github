@@ -1,14 +1,19 @@
+import { Category } from "./category.model";
 
 export interface AmplifierType {
     type: 'combo' | 'top' | 'speaker'
 }
 
-export interface Amplification {
+
+
+export interface Product {
     id?: string;
-    brand: string;
-    type: AmplifierType;
+    category: Category;
+    name: string;
+    description: string;
+    price: number;
+
     // watt:number;
     // sold:boolean;
-    // price:number;
     // description:string;
 }

@@ -6,6 +6,10 @@
         flex-direction: column;
         gap: 0.3rem;
         .categories-list-item {
+            display: flex;
+            gap: 1rem;
+            // border: 1px solid black;
+            align-items: center;
         }
     }
 }
