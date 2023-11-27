@@ -1,28 +1,30 @@
 <div class="page app-product-categories">
-    <ul class="categories-list">
-        <li class="categories-list-item"
-            *ngFor="let category of categories$|async">
-            <button color="primary"
-                mat-mini-fab
-                (click)="onEdit(category.id)">
-                <mat-icon fontIcon="edit"></mat-icon>
-                <!-- <span class="mat-icon">edit</span> -->
-            </button>
-            <button mat-mini-fab
-                color="warn"
-                (click)="onDelete(category.id)">
-                <mat-icon fontIcon="delete"></mat-icon>
-            </button>
-            <button (click)="onCategorySelected(category)"
-                mat-raised-button
-                color="primary">{{category.name}}
-            </button>
-        </li>
-        <li>
-            <button mat-raised-button
-                (click)="onAddCategory()">add category
-            </button>
-        </li>
-    </ul>
-    <app-category></app-category>
+    <div class="content">
+        <div class="title">{{title}}</div>
+        <ul class="categories-list">
+            <li class="categories-list-item"
+                *ngFor="let category of categories$|async">
+                <button color="primary"
+                    mat-mini-fab
+                    (click)="onEdit(category.id)">
+                    <mat-icon fontIcon="edit"></mat-icon>
+                    <!-- <span class="mat-icon">edit</span> -->
+                </button>
+                <button mat-mini-fab
+                    color="warn"
+                    (click)="onDelete(category.id)">
+                    <mat-icon fontIcon="delete"></mat-icon>
+                </button>
+                <button (click)="onCategorySelected(category.id)"
+                    mat-raised-button
+                    color="primary">{{category.name}}
+                </button>
+            </li>
+
+        </ul>
+        <button mat-raised-button
+            (click)="onAddCategory()">add category
+        </button>
+    </div>
+    <app-products></app-products>
 </div>

@@ -1,12 +1,14 @@
 
-import { CATEGORY } from "./admin.actions"
+import { CATEGORY_ID, PRODUCT_ID } from "./admin.actions"
 
 export interface AdminState {
-    category: string
+    categoryId: string;
+    productId: string;
 }
 
 let initialState: AdminState = {
-    category: null,
+    categoryId: null,
+    productId: null
 }
 
 // export function setAdminStateFromLs(adminStateFromLS: AdminState) {
@@ -29,10 +31,17 @@ export function adminReducer(state = initialState, action: any) {
     //     }
     // }
     switch (action.type) {
-        case CATEGORY: {
+        case CATEGORY_ID: {
             return {
                 ...state,
-                category: action.category
+                categoryId: action.categoryId
+            }
+        }
+        case PRODUCT_ID: {
+            return {
+                ...state,
+                productId: action.productId
+
             }
         }
         default: {
@@ -43,6 +52,7 @@ export function adminReducer(state = initialState, action: any) {
 
 
 
-export const getCategory = (adminState: AdminState) => adminState.category;
+export const getCategoryId = (adminState: AdminState) => adminState.categoryId;
+export const getProductId = (adminState: AdminState) => adminState.productId;
 
 

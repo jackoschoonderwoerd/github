@@ -13,15 +13,15 @@ import { AddCategoryComponent } from './add-category/add-category.component';
 import { MatIconModule } from '@angular/material/icon';
 import { FirebaseError } from '@angular/fire/app';
 import { ConfirmComponent } from 'src/app/shared/confirm/confirm.component';
-import { CategoryComponent } from './category/category.component';
+import { ProductsComponent } from './products/products.component';
 
 
 @Component({
-    selector: 'app-product-categories',
+    selector: 'app-categories',
     standalone: true,
     imports: [
         CommonModule,
-        CategoryComponent,
+        ProductsComponent,
         MatButtonModule,
         MatDialogModule,
         MatIconModule
@@ -34,6 +34,7 @@ import { CategoryComponent } from './category/category.component';
 
 export class CategoriesComponent implements OnInit {
     categories: string[] = ['amplifiers', 'german basses']
+    title: string = 'CategoriesComponent'
 
     categories$: Observable<DocumentData>
 
@@ -48,20 +49,14 @@ export class CategoriesComponent implements OnInit {
         this.categories$ = this.fsService.collection(path);
     }
 
-    onCategorySelected(category: string) {
-        this.store.dispatch(new ADMIN.SetCategory(category))
+    onCategorySelected(categoryId: string) {
+        console.log(categoryId)
+        this.store.dispatch(new ADMIN.SetCategoryId(categoryId))
     }
     onAddCategory() {
         this.dialog.open(AddCategoryComponent)
-        // const path = 'categries'
-        // const document = {
-        //     name: 'german basses'
-        // }
-        // this.fsService.addDoc(path, document)
-        //     .then((docRef: DocumentReference) => {
-
-        //     })
     }
+
     onEdit(id: string) {
         this.dialog.open(AddCategoryComponent, {
             data: {

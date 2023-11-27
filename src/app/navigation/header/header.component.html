@@ -14,9 +14,15 @@
                 routerLink="products"
                 [routerLinkActiveOptions]="{exact:true}">products</a></li>
     </ul>
-    <ul class="user">
+
+    <ul class="toolbar-list-center">
         <li *ngIf="user$|async">{{(user$|async).email}}</li>
+        <li class="store"
+            routerLink="store"></li><a routerLink="store"
+            routerLinkActive="link-active"
+            [routerLinkActiveOptions]="{exact:true}">store</a>
     </ul>
+
     <ul class="toolbar-list-right">
         <li *ngIf="!(user$|async)"
             class="toolbar-list-item"

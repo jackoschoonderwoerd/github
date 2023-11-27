@@ -6,6 +6,7 @@ import { ContactComponent } from './pages/contact/contact.component';
 
 import { LoginComponent } from './admin/login/login.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
+import { StoreComponent } from './pages/store/store.component';
 
 
 
@@ -25,6 +26,9 @@ export const routes: Routes = [
     },
     {
         path: 'products', component: CategoriesComponent
+    },
+    {
+        path: 'store', component: StoreComponent
     }
 
 ];

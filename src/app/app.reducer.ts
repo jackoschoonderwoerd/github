@@ -16,7 +16,8 @@ export const reducers: ActionReducerMap<State> = {
 // }
 
 export const getAdminState = createFeatureSelector<fromAdmin.AdminState>('admin');
-export const getCategory = createSelector(getAdminState, fromAdmin.getCategory)
+export const getCategoryId = createSelector(getAdminState, fromAdmin.getCategoryId);
+export const getProductId = createSelector(getAdminState, fromAdmin.getProductId);
 
 
 

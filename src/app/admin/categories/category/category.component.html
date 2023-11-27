@@ -1,9 +1,0 @@
-<div class="nested-component">
-    <ul class="products">
-        <li *ngFor="let product of products$|async">{{product.json}}</li>
-    </ul>
-    <button *ngIf="category"
-        mat-raised-button
-        color="primary"
-        (click)="onAddProduct()">add {{(category$|async)?.name}}</button>
-</div>

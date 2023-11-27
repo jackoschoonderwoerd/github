@@ -1,0 +1,25 @@
+<div class="nested-component products-component">
+    <div class="title">{{title}}</div>
+    <div class="category-name">{{(category$|async)?.name}}</div>
+    <ul class="products-list">
+        <li class="products-list-item"
+            *ngFor="let product of products$|async">
+            <button color="primary"
+                mat-mini-fab
+                (click)="onEdit(product.id)">
+                <mat-icon fontIcon="edit"></mat-icon>
+                <!-- <span class="mat-icon">edit</span> -->
+            </button>
+            <button mat-mini-fab
+                color="warn"
+                (click)="onDelete(product.id)">
+                <mat-icon fontIcon="delete"></mat-icon>
+            </button>
+            <div class="name">{{product.name}}</div>
+        </li>
+    </ul>
+    <button *ngIf="categoryId"
+        mat-raised-button
+        color="primary"
+        (click)="onAddProduct()">add to {{(category$|async)?.name}}</button>
+</div>

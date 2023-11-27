@@ -1,0 +1,137 @@
+<form [formGroup]="form">
+    <div class="general">
+        <mat-form-field>
+            <label>name</label>
+            <input type="text"
+                formControlName="name"
+                matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <label>scale</label>
+            <input type="text"
+                formControlName="scale"
+                matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <label>type of wood</label>
+            <input type="text"
+                formControlName="typeOfWood"
+                matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <label>year built</label>
+            <input type="text"
+                formControlName="yearBuilt"
+                matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <label>backboard</label>
+            <input type="text"
+                formControlName="backboard"
+                matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <label>color</label>
+            <input type="text"
+                formControlName="color"
+                matInput>
+        </mat-form-field>
+    </div>
+    <div class="technical">
+        <mat-form-field>
+            <label>bridge</label>
+            <input type="number"
+                step="0.1"
+                formControlName="bridge"
+                matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <label>mensuur</label>
+            <input type="number"
+                step="0.1"
+                formControlName="mensuur"
+                matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <label>string length</label>
+            <input type="number"
+                step="0.1"
+                formControlName="stringLength"
+                matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <label>top</label>
+            <input type="number"
+                step="0.1"
+                formControlName="top"
+                matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <label>middle</label>
+            <input type="number"
+                step="0.1"
+                formControlName="middle"
+                matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <label>bottom</label>
+            <input type="number"
+                step="0.1"
+                formControlName="bottom"
+                matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <label>depth</label>
+            <input type="number"
+                step="0.1"
+                formControlName="depth"
+                matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <label>length back plate</label>
+            <input type="number"
+                step="0.1"
+                formControlName="lengthBackPlate"
+                matInput>
+        </mat-form-field>
+    </div>
+
+    <div class="right">
+        <mat-form-field>
+            <label>description</label>
+            <textarea type="text"
+                step="0.01"
+                formControlName="description"
+                matInput></textarea>
+        </mat-form-field>
+
+        <input #fileInput
+            style="display: none;"
+            type="file"
+            (change)="onImageInputChange($event)">
+        <div class="image-container">
+            <img [src]="imageUrl"
+                alt="no image available">
+        </div>
+
+        <button mat-raised-button
+            color="primary"
+            (click)="fileInput.click()">select image</button>
+        <mat-form-field>
+            <label>price</label>
+            <input type="number"
+                step="0.01"
+                formControlName="price"
+                matInput>
+        </mat-form-field>
+        <div class="buttons">
+            <button mat-raised-button
+                color="primary"
+                (click)="onAddBass()">{{editmode ?'update bass':'add bass'}}</button>
+            <button mat-raised-button
+                color="primary"
+                (click)="onCancel()">cancel</button>
+        </div>
+    </div>
+
+</form>

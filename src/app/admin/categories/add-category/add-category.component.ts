@@ -38,7 +38,7 @@ export class AddCategoryComponent implements OnInit {
 
     ngOnInit(): void {
         console.log(this.data);
-        if (this.data.id) {
+        if (this.data && this.data.id) {
             this.editmode = true;
             const path = `categories/${this.data.id}`
             this.fsService.getDoc(path).subscribe((category: Category) => {
