@@ -3,8 +3,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { AtelierComponent } from './pages/atelier/atelier.component';
 import { ContactComponent } from './pages/contact/contact.component';
 
-import { ProductsComponent } from './admin/product-categories/product-categories.component';
+
 import { LoginComponent } from './admin/login/login.component';
+import { CategoriesComponent } from './admin/categories/categories.component';
 
 
 
@@ -23,7 +24,7 @@ export const routes: Routes = [
         path: 'login', component: LoginComponent
     },
     {
-        path: 'products', component: ProductsComponent
+        path: 'products', component: CategoriesComponent
     }
 
 ];
