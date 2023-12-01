@@ -1,0 +1,109 @@
+<div class="app-product-details">
+    <!-- {{product$|async|json}} -->
+    <div class="id product-property"
+        *ngIf="(product$|async)?.id && isLoggedIn">
+        <div class="title">id</div>
+        <div class="property">{{(product$|async)?.id}}</div>
+    </div>
+    <div class="name product-property"
+        *ngIf="(product$|async)?.name">
+        <div class="title">name</div>
+        <div class="property">{{(product$|async)?.name}}</div>
+    </div>
+    <div class="description product-property"
+        *ngIf="(product$|async)?.description">
+        <div class="title">description</div>
+        <div class="property">{{(product$|async)?.description}}</div>
+    </div>
+    <div class="image product-property"
+        *ngIf="(product$|async)?.imageUrl">
+
+        <img [src]="(product$|async)?.imageUrl">
+    </div>
+    <div class="price product-property"
+        *ngIf="(product$|async)?.price">
+        <div class="title">price</div>
+        <div class="property">{{(product$|async)?.price|currency:"EUR"}}</div>
+    </div>
+    <div class="scale product-property"
+        *ngIf="(product$|async)?.scale">
+        <div class="title">scale</div>
+        <div class="property">{{(product$|async)?.scale}}</div>
+    </div>
+    <div class="typeOfWood product-property"
+        *ngIf="(product$|async)?.typeOfWood">
+        <div class="title">type of wood</div>
+        <div class="property">{{(product$|async)?.typeOfWood}}</div>
+    </div>
+    <div class="origin product-property"
+        *ngIf="(product$|async)?.origin">
+        <div class="title">origin</div>
+        <div class="property">{{(product$|async)?.origin}}</div>
+    </div>
+    <div class="yearBuilt product-property"
+        *ngIf="(product$|async)?.yearBuilt">
+        <div class="title">year built</div>
+        <div class="property">{{(product$|async)?.yearBuilt}}</div>
+    </div>
+    <div class="backboard product-property"
+        *ngIf="(product$|async)?.backboard">
+        <div class="title
+        ">backboard</div>
+        <div class="property">{{(product$|async)?.backboard}}</div>
+    </div>
+    <div class="color product-property"
+        *ngIf="(product$|async)?.color">
+        <div class="title">color</div>
+        <div class="property">{{(product$|async)?.color}}</div>
+    </div>
+    <div class="bridge product-property"
+        *ngIf="(product$|async)?.bridge">
+        <div class="title">bridge</div>
+        <div class="property">{{(product$|async)?.bridge}}</div>
+    </div>
+    <div class="mensuur product-property"
+        *ngIf="(product$|async)?.mensuur">
+        <div class="title">mensuur</div>
+        <div class="property">{{(product$|async)?.mensuur}}</div>
+    </div>
+    <div class="stringLength product-property"
+        *ngIf="(product$|async)?.stringLength">
+        <div class="title">stringLength</div>
+        <div class="property">{{(product$|async)?.stringLength}}</div>
+    </div>
+    <div class="top product-property"
+        *ngIf="(product$|async)?.top">
+        <div class="title">top</div>
+        <div class="property">{{(product$|async)?.top}}</div>
+    </div>
+    <div class="middle product-property"
+        *ngIf="(product$|async)?.middle">
+        <div class="title">middle</div>
+        <div class="property">{{(product$|async)?.middle}}</div>
+    </div>
+    <div class="bottom product-property"
+        *ngIf="(product$|async)?.bottom">
+        <div class="title">bottom</div>
+        <div class="property">{{(product$|async)?.bottom}}</div>
+    </div>
+    <div class="depth product-property"
+        *ngIf="(product$|async)?.depth">
+        <div class="title">depth</div>
+        <div class="property">{{(product$|async)?.depth}}</div>
+    </div>
+    <div class="lengthBackplate product-property"
+        *ngIf="(product$|async)?.lengthBackplate">
+        <div class="title">length backplate</div>
+        <div class="property">{{(product$|async)?.lengthBackplate}}</div>
+    </div>
+    <div class="type product-property"
+        *ngIf="(product$|async)?.type">
+        <div class="title">type</div>
+        <div class="property">{{(product$|async)?.type}}</div>
+    </div>
+    <div class="output product-property"
+        *ngIf="(product$|async)?.output">
+        <div class="title">output</div>
+        <div class="property">{{(product$|async)?.output}}</div>
+    </div>
+</div>

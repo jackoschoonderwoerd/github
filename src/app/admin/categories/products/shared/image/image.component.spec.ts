@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddBassComponent } from './add-bass.component';
+import { ImageComponent } from './image.component';
 
-describe('AddBassComponent', () => {
-  let component: AddBassComponent;
-  let fixture: ComponentFixture<AddBassComponent>;
+describe('ImageComponent', () => {
+  let component: ImageComponent;
+  let fixture: ComponentFixture<ImageComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [AddBassComponent]
+      imports: [ImageComponent]
     });
-    fixture = TestBed.createComponent(AddBassComponent);
+    fixture = TestBed.createComponent(ImageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

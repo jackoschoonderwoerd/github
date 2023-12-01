@@ -1,0 +1,11 @@
+<input #fileInput
+    style="display: none;"
+    type="file"
+    (change)="onImageInputChange($event)">
+<div class="image-container">
+    <img [src]="imageUrl"
+        alt="no image available">
+</div>
+<button mat-raised-button
+    color="primary"
+    (click)="fileInput.click()">select image</button>

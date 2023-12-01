@@ -4,7 +4,7 @@ import * as fromRoot from 'src/app/app.reducer'
 import { Store } from '@ngrx/store';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
-import { AddProductComponent } from './add-product/add-product.component';
+
 import { Observable, take } from 'rxjs';
 import { DocumentData } from '@angular/fire/firestore';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
@@ -14,8 +14,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { ConfirmComponent } from 'src/app/shared/confirm/confirm.component';
 import { FirebaseError } from '@angular/fire/app';
 import * as ADMIN from 'src/app/admin/store/admin.actions'
-import { AddBassComponent } from './add-bass/add-bass.component';
-import { AddBowComponent } from './add-bow/add-bow.component';
+
+
+import { ProductDetailsComponent } from './product-details/product-details.component';
+import { AddProductComponent } from './add-bass/add-product.component';
+import { StorageService } from 'src/app/shared/services/storage.service';
+import { StorageError } from '@angular/fire/storage';
 
 @Component({
     selector: 'app-products',
@@ -29,22 +33,27 @@ export class ProductsComponent implements OnInit {
     title: string = 'ProductsComponent'
     categoryId: Category;
     category$: Observable<DocumentData>;
+    category: Category
     products$: Observable<DocumentData>
 
     constructor(
         private store: Store<fromRoot.State>,
         private dialog: MatDialog,
-        private fsService: FirestoreService
+        private fsService: FirestoreService,
+        private storageService: StorageService
 
     ) { }
 
     ngOnInit(): void {
         this.store.select(fromRoot.getCategoryId).subscribe((categoryId: any) => {
             if (categoryId) {
-                this.categoryId = categoryId
+                // this.categoryId = categoryId
                 if (categoryId) {
-
+                    this.categoryId = categoryId;
                     const pathToCategory = `categories/${categoryId}`
+                    this.fsService.getDoc(pathToCategory).subscribe((category: Category) => {
+                        this.category = category
+                    })
                     this.category$ = this.fsService.getDoc(pathToCategory)
                     this.getProducts()
                     const pathToProducts = `categories/${categoryId}/products`
@@ -56,12 +65,17 @@ export class ProductsComponent implements OnInit {
             }
         })
     }
-    onEdit(productId) {
-        this.store.dispatch(new ADMIN.SetProductId(productId))
-        this.dialog.open(AddProductComponent)
+    onEdit(product) {
+        // this.store.dispatch(new ADMIN.SetProductId(productId))
+        this.dialog.open(AddProductComponent, {
+            data: {
+                product,
+                category: this.category
+            }
+        })
     }
-    onDelete(productId: string) {
-        console.log(productId)
+    onDelete(product: Product) {
+
         const dialogRef = this.dialog.open(ConfirmComponent, {
             data: {
                 message: 'This will permanently delete the product and all of it\'s properties'
@@ -69,7 +83,17 @@ export class ProductsComponent implements OnInit {
         })
         dialogRef.afterClosed().subscribe((status: boolean) => {
             if (status) {
-                const pathToProduct = `categories/${this.categoryId}/products/${productId}`
+                if (product.imageUrl) {
+                    const pathToImageFile = `categories/${this.category.id}/products/${product.id}`
+                    this.storageService.deleteObject(pathToImageFile)
+                        .then((res: any) => {
+                            console.log(`image file deleted; ${res}`)
+                        })
+                        .catch((err: StorageError) => {
+                            console.log(`failed to delete image file; ${err.message}`)
+                        })
+                }
+                const pathToProduct = `categories/${this.category.id}/products/${product.id}`
                 this.fsService.deleteDoc(pathToProduct)
                     .then((res: any) => {
                         console.log(`product deleted; ${res}`);
@@ -80,28 +104,18 @@ export class ProductsComponent implements OnInit {
             }
         })
     }
+
+
     onAddProduct() {
         this.store.select(fromRoot.getCategoryId).subscribe((categoryId: string) => {
             const pathToCategory = `categories/${categoryId}`
             this.fsService.getDoc(pathToCategory).subscribe((category: Category) => {
-                console.log(category);
-                const name = category.name
-                switch (name) {
-                    case 'french basses': {
-                        console.log('say hi')
-                        this.dialog.open(AddBassComponent, {
-                            data: {
-                                category: 'french basses'
-                            }
-                        })
-                        break;
+
+                this.dialog.open(AddProductComponent, {
+                    data: {
+                        category
                     }
-                    case 'bows': {
-                        console.log('say ho')
-                        this.dialog.open(AddBowComponent)
-                        break;
-                    }
-                }
+                })
             })
         })
         // this.dialog.open(AddProductComponent)
@@ -109,5 +123,13 @@ export class ProductsComponent implements OnInit {
     getProducts() {
         const pathToProducts = `categories/${this.categoryId}/products`;
         this.products$ = this.fsService.collection(pathToProducts);
+    }
+    onProductDetails(productId) {
+        this.dialog.open(ProductDetailsComponent, {
+            data: {
+                categoryId: this.categoryId,
+                productId
+            }
+        })
     }
 }

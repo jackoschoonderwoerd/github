@@ -1,9 +1,51 @@
 import { Injectable } from '@angular/core';
+import {
+    Storage,
+    ref,
+    deleteObject,
+    listAll,
+    uploadBytes,
+    uploadString,
+    uploadBytesResumable,
+    percentage,
+    getDownloadURL,
+    getMetadata,
+    provideStorage,
+    getStorage,
+    getBytes,
+    ListResult,
+} from '@angular/fire/storage';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class StorageService {
 
-  constructor() { }
+    constructor(
+        private storage: Storage
+    ) { }
+
+    storeObject(path: string, file: File) {
+        if (path && file) {
+            // console.log(path, file)
+            const storageRef = ref(this.storage, path);
+            return uploadBytesResumable(storageRef, file)
+                .then((data: any) => {
+                    // console.log(data)
+                    return getDownloadURL(storageRef)
+                })
+                .then((url: string) => {
+                    // console.log(url)
+                    return url
+                })
+        } else {
+            console.log('can\'t store object due to insufficient data');
+        }
+    }
+    deleteObject(path) {
+        if (path) {
+            const storageRef = ref(this.storage, path)
+            return deleteObject(storageRef)
+        }
+    }
 }

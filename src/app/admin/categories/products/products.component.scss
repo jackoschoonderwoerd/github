@@ -9,10 +9,24 @@
         gap: 0.2rem;
         .products-list-item {
             display: flex;
+            justify-content: space-between;
             gap: 1rem;
             border: 1px solid darkgray;
             padding: 0.2rem 1rem;
             align-items: center;
+            .left {
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+            }
+            .right {
+                display: flex;
+                gap: 1rem;
+                align-items: center;
+                img {
+                    height: 3rem;
+                }
+            }
         }
     }
 }

@@ -4,21 +4,32 @@
     <ul class="products-list">
         <li class="products-list-item"
             *ngFor="let product of products$|async">
-            <button color="primary"
-                mat-mini-fab
-                (click)="onEdit(product.id)">
-                <mat-icon fontIcon="edit"></mat-icon>
-                <!-- <span class="mat-icon">edit</span> -->
-            </button>
-            <button mat-mini-fab
-                color="warn"
-                (click)="onDelete(product.id)">
-                <mat-icon fontIcon="delete"></mat-icon>
-            </button>
-            <div class="name">{{product.name}}</div>
+            <div class="left">
+                <button color="primary"
+                    mat-mini-fab
+                    (click)="onEdit(product)">
+                    <mat-icon fontIcon="edit"></mat-icon>
+                    <!-- <span class="mat-icon">edit</span> -->
+                </button>
+                <button mat-mini-fab
+                    color="warn"
+                    (click)="onDelete(product)">
+                    <mat-icon fontIcon="delete"></mat-icon>
+                </button>
+                <div class="name">{{product.name}}</div>
+            </div>
+            <div class="right">
+                <img [src]="product.imageUrl"
+                    alt="">
+                <button mat-mini-fab
+                    color="primary"
+                    (click)="onProductDetails(product.id)">
+                    <mat-icon fontIcon="search"></mat-icon>
+                </button>
+            </div>
         </li>
     </ul>
-    <button *ngIf="categoryId"
+    <button *ngIf="category"
         mat-raised-button
         color="primary"
         (click)="onAddProduct()">add to {{(category$|async)?.name}}</button>
