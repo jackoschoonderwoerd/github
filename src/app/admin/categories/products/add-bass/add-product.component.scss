@@ -1,90 +1,115 @@
-form {
+.app-add-product {
     padding: 1rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    // grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 1rem;
-    .category-name {
-        text-transform: uppercase;
-        font-weight: bold;
-        padding: 0.5rem;
-        background-color: lightgray;
-        grid-column: 1/-1;
-    }
-    .general {
-        padding: 0.5rem;
-        background-color: lightgray;
+    .names {
         display: flex;
-        flex-direction: column;
         gap: 1rem;
-        .title {
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-        .split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+        border: 1px solid black;
+        padding: 0.3rem;
+    }
+    .images-container {
+        display: flex;
+        gap: 1rem;
+        .image-container {
+            background-color: lightgray;
+            padding: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            img {
+                max-width: 5rem;
+            }
         }
     }
-    .bass {
-        padding: 0.5rem;
-        background-color: lightgray;
+    form {
         display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        // grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
         gap: 1rem;
-        grid-template-columns: 1fr 1fr;
-
-        .title {
+        .category-name {
             text-transform: uppercase;
             font-weight: bold;
+            padding: 0.5rem;
+            background-color: lightgray;
             grid-column: 1/-1;
         }
-    }
-    .right {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        .amplifiers {
+        .general {
             padding: 0.5rem;
             background-color: lightgray;
-            // display: flex;
-            // flex-direction: column;
-            // grid-template-columns: 1fr 1fr;
-            grid-column: 3/4;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            .title {
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+            .split {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+        }
+        .bass {
+            padding: 0.5rem;
+            background-color: lightgray;
             display: grid;
             gap: 1rem;
             grid-template-columns: 1fr 1fr;
+
             .title {
-                grid-column: 1/-1;
                 text-transform: uppercase;
                 font-weight: bold;
+                grid-column: 1/-1;
             }
         }
-        .image {
-            padding: 0.5rem;
-            background-color: lightgray;
+        .right {
             display: flex;
-            gap: 1rem;
             flex-direction: column;
-            .title {
-                text-transform: uppercase;
-                font-weight: bold;
-            }
-            .image-container {
-                margin: auto;
-                img {
-                    width: 100%;
-                    max-width: 20rem;
+            gap: 1rem;
+            .amplifiers {
+                padding: 0.5rem;
+                background-color: lightgray;
+                // display: flex;
+                // flex-direction: column;
+                // grid-template-columns: 1fr 1fr;
+                grid-column: 3/4;
+                display: grid;
+                gap: 1rem;
+                grid-template-columns: 1fr 1fr;
+                .title {
+                    grid-column: 1/-1;
+                    text-transform: uppercase;
+                    font-weight: bold;
                 }
             }
-        }
-        .buttons {
-            padding: 0.5rem;
-            background-color: lightgray;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+            .image {
+                padding: 0.5rem;
+                background-color: lightgray;
+                display: flex;
+                gap: 1rem;
+                flex-direction: column;
+                .title {
+                    text-transform: uppercase;
+                    font-weight: bold;
+                }
+                .image-container {
+                    margin: auto;
+                    img {
+                        width: 100%;
+                        max-width: 20rem;
+                    }
+                }
+            }
+            .buttons {
+                padding: 0.5rem;
+                background-color: lightgray;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ import { ImageComponent } from '../shared/image/image.component';
 import * as fromRoot from 'src/app/app.reducer'
 import { Store } from '@ngrx/store';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
-import { DocumentReference, FirestoreError } from '@angular/fire/firestore';
+import { DocumentReference, FirestoreError, updateDoc } from '@angular/fire/firestore';
 import * as ADMIN from 'src/app/admin/store/admin.actions'
 import { Category } from 'src/app/shared/models/category.model';
 import { StorageService } from 'src/app/shared/services/storage.service';
@@ -18,6 +18,10 @@ import { Product } from 'src/app/shared/models/product.model';
 import { StorageError } from '@angular/fire/storage';
 import { FirebaseError } from '@angular/fire/app';
 import { ConfirmComponent } from 'src/app/shared/confirm/confirm.component';
+import { Observable, take } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
+
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
     selector: 'app-add-bass',
@@ -28,7 +32,9 @@ import { ConfirmComponent } from 'src/app/shared/confirm/confirm.component';
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
-        ImageComponent
+        ImageComponent,
+        MatIconModule,
+        MatProgressSpinnerModule
     ],
     templateUrl: './add-product.component.html',
     styleUrls: ['./add-product.component.scss']
@@ -43,7 +49,10 @@ export class AddProductComponent implements OnInit {
     imageFile: File;
     imageFiles: File[] = [];
     product: Product;
+    product$: Observable<any>
     imageUrls: string[] = [];
+    isStoringImage: boolean = false
+    array: string[] = ['aad', 'bas', 'çor', 'daan', 'érid', 'frits'];
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -67,6 +76,8 @@ export class AddProductComponent implements OnInit {
             this.category = this.data.category;
         }
         if (this.data.product) {
+            const pathToProduct = `categories/${this.category.id}/products/${this.data.product.id}`
+            this.product$ = this.fsService.getDoc(pathToProduct)
             this.product = this.data.product
             this.imageUrl = this.data.product.imageUrl;
             this.editmode = true;
@@ -83,6 +94,7 @@ export class AddProductComponent implements OnInit {
             description: new FormControl(null),
             color: new FormControl(null),
             imageUrl: new FormControl(null),
+            imageUrls: new FormControl(null),
             material: new FormControl(null),
             weight: new FormControl(null),
             price: new FormControl(null, [Validators.required]),
@@ -121,28 +133,133 @@ export class AddProductComponent implements OnInit {
     // }
 
     onImageInputChange(e) {
+        this.isStoringImage = true
         this.imageUrls = [];
         this.imageUpdated = true;
         this.imageFile = e.target.files[0]
-        this.imageFiles.push(e.target.files[0])
-        this.imageFiles.forEach((imageFile: File) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                let url = reader.result as string
-                console.log(url)
-                this.imageUrls.push(url)
-            }
-            reader.readAsDataURL(imageFile);
-            console.log(this.imageFiles)
-            console.log(this.imageUrls)
-        })
-    }
-    onDeleteImageFromImageUrls(i) {
-        console.log(i)
-        this.imageUrls.splice(i, 1)
+        // this.imageFiles.push(e.target.files[0])
+        this.addImageStorage(e.target.files[0])
+            .then((downloadUrl: string) => {
+                console.log(`image stored at :${downloadUrl}`)
+                return downloadUrl
+            })
+            .catch((err: StorageError) => {
+                console.log(`failed to store image; ${err.message}`)
+            })
+            .then((downloadUrl: string) => {
+                console.log(downloadUrl);
+                return this.addUrlToProductImagesArray(downloadUrl)
+            })
+            .then((res: any) => {
+                console.log(`imagesUrlArray updated, ${res}`)
+                this.isStoringImage = false;
+            })
+            .catch((err: FirebaseError) => {
+                console.log(`failed to update imagerUrlArray; ${err.message}`)
+                this.isStoringImage = false;
+            })
+
+        return;
     }
 
-    onDeleteImage() {
+    addImageStorage(image: File) {
+        console.log(image.name)
+        const pathToImageStorage = `categories/${this.category.id}/products/${this.product.id}/images/${image.name}`
+        return this.storageService.storeObject(pathToImageStorage, image)
+
+    }
+
+    addUrlToProductImagesArray(imageUrl: string) {
+        const pathToProductImageUrlsArray = `categories/${this.category.id}/products/${this.product.id}`
+        console.log(imageUrl);
+        return this.fsService.updateArray(pathToProductImageUrlsArray, imageUrl)
+
+    }
+    onDeleteImage(imageUrl: string, i: number) {
+        const dialogRef = this.dialog.open(ConfirmComponent, {
+            data: {
+                message: 'This will permanently delete the selected image'
+            }
+        });
+        dialogRef.afterClosed().subscribe((status: boolean) => {
+            if (status) {
+                console.log(imageUrl, i)
+                this.product$.pipe(take(1)).subscribe((product: Product) => {
+                    const src: string = product.imageUrls[i];
+                    const indexStart: number = src.indexOf('images%2F') + 9;
+                    const indexEnd: number = src.indexOf('?alt');
+                    const filename: string = src.substring(indexEnd, indexStart);
+                    const pathToFile: string = `categories/${this.category.id}/products/${this.product.id}/images/${filename}`
+                    this.storageService.deleteObject(pathToFile)
+                        .then((res: any) => {
+                            console.log(`file deleted; ${res}`)
+                        })
+                        .catch((err: StorageError) => {
+                            console.log(`failed to delete file; ${err.message}`);
+                            return
+                        })
+                        .then(() => {
+                            const pathToProduct: string = `categories/${this.category.id}/products/${product.id}`;
+                            this.fsService.deleteStringFromArray(pathToProduct, src)
+                        })
+                        .then((res: any) => {
+                            console.log(`imageUrl removed from array; ${res}`)
+                        })
+                        .catch((err: FirebaseError) => {
+                            console.log(`failed to remove imageUrl from arra; ${err.message}`)
+                        })
+                })
+            }
+        })
+    }
+
+    onMoveImage(direction: string, index1: number) {
+        console.log(index1)
+        let index2 = 0;
+        if (direction == 'left') {
+            index2 = index1 - 1;
+        } else {
+            index2 = index1 + 1;
+        }
+        if (index1 >= 0 && index1 < this.product.imageUrls.length && index2 >= 0 && index2 < this.array.length) {
+            let temp = this.product.imageUrls[index1];
+            this.product.imageUrls[index1] = this.product.imageUrls[index2];
+            this.product.imageUrls[index2] = temp;
+        } else {
+            console.log("Invalid indexes provided.");
+        }
+        console.log(this.product.imageUrls)
+        // console.log(index1)
+        // let index2 = 0;
+        // if (direction == 'left') {
+        //     index2 = index1 - 1;
+        // } else {
+        //     index2 = index1 + 1;
+        // }
+        // if (index1 >= 0 && index1 < this.array.length && index2 >= 0 && index2 < this.array.length) {
+        //     let temp = this.array[index1];
+        //     this.array[index1] = this.array[index2];
+        //     this.array[index2] = temp;
+        // } else {
+        //     console.log("Invalid indexes provided.");
+        // }
+        // console.log(this.array)
+    }
+
+
+    switchElements(array, index1, index2) {
+        if (index1 >= 0 && index1 < array.length && index2 >= 0 && index2 < array.length) {
+            let temp = array[index1];
+            array[index1] = array[index2];
+            array[index2] = temp;
+        } else {
+            console.log("Invalid indexes provided.");
+        }
+    }
+
+
+
+    onDeleteImageXX() {
         const dialogRef = this.dialog.open(ConfirmComponent, {
             data: {
                 message: 'this will premanently delete the image'
@@ -173,89 +290,128 @@ export class AddProductComponent implements OnInit {
     }
 
     onAddProduct() {
+        const product: Product = {
+            ...this.form.value
+        }
         if (!this.editmode) {
-            console.log(this.form.value)
-            const product: Product = {
-                ...this.form.value,
-                imageUrl: null
-            }
-            console.log(product);
-            this.store.select(fromRoot.getCategoryId).subscribe((categoryId: string) => {
-                const pathToFrenchBasses = `categories/${categoryId}/products`
-                this.fsService.addDoc(pathToFrenchBasses, product)
-                    .then((docRef: DocumentReference) => {
-                        this.store.dispatch(new ADMIN.SetProductId(docRef.id))
-                        console.log(`product added; ${docRef.id}`)
-                        if (this.imageUpdated) {
-                            const pathToImageFile = `categories/${categoryId}/products/${docRef.id}`
-                            this.storageService.storeObject(pathToImageFile, this.imageFile)
-                                .then((downloadUrl: string) => {
-                                    console.log(`image file stored`)
-                                    const pathToProduct = `categories/${categoryId}/products/${docRef.id}`;
-                                    this.fsService.updateDocument(pathToProduct, { imageUrl: downloadUrl });
-                                    this.dialogRef.close();
-                                })
-                                .catch((err: StorageError) => {
-                                    console.log(`failed to store image file; ${err.message}`)
-                                    this.dialogRef.close();
-                                })
-                        } else {
-                            console.log('no image to store');
-                            this.dialogRef.close();
-                        }
-                    })
-                    .catch((err: FirestoreError) => {
-                        console.log(`failed to add product; ${err.message}`)
-                        this.dialogRef.close();
-                    })
-            })
+            const pathToProducts = `categories/${this.category.id}/products`;
+            this.fsService.addDoc(pathToProducts, product)
+                .then((docRef: DocumentReference) => {
+                    this.editmode = true;
+                    product.id = docRef.id;
+                    this.product = product;
+                    const pathToProduct = `categories/${this.category.id}/products/${product.id}`
+                    this.product$ = this.fsService.getDoc(pathToProduct)
+                })
+                .catch((err: FirebaseError) => {
+                    console.log(`failed to add product; ${err.message}`)
+                })
         } else {
-            console.log(this.form.value);
-            const product: Product = {
-                ...this.form.value,
-                imageUrl: this.imageUrl
-            }
-            console.log(product)
-            if (product.imageUrl) {
-                const pathToImageFile = `categories/${this.category.id}/products/${this.product.id}`
-                console.log(pathToImageFile);
-                this.storageService.storeObject(pathToImageFile, this.imageFile)
-                    .then((downloadUrl: string) => {
-                        console.log(`image file stored; ${downloadUrl}`)
-                    })
-                    .catch((err: StorageError) => {
-                        console.log(`failed to store image file; ${err.message}`)
-                    })
-                    .then(() => {
-                        const pathToProduct = `categories/${this.category.id}/products/${this.product.id}`;
-                        return this.fsService.setDoc(pathToProduct, product)
-
-                    })
-                    .then((res: any) => {
-                        console.log(`product updated; ${res}`)
-                        this.dialogRef.close();
-                    })
-                    .catch((err: FirestoreError) => {
-                        console.log(`failed to update product; ${err.message}`)
-                        this.dialogRef.close();
-                    })
-            } else {
-                const pathToProduct = `categories/${this.category.id}/products/${this.product.id}`;
-                return this.fsService.setDoc(pathToProduct, product)
-                    .then((res: any) => {
-                        console.log(`product updated; ${res}`)
-                        this.dialogRef.close();
-                    })
-                    .catch((err: FirestoreError) => {
-                        console.log(`failed to update product; ${err.message}`)
-                        this.dialogRef.close();
-                    })
-            }
-
+            console.log('update')
         }
     }
+    onUpdateProduct() {
+        const product: Product = {
+            ...this.form.value,
+            imageUrls: this.product.imageUrls
+        }
+        console.log(product)
+        const pathToProduct = `categories/${this.category.id}/products/${product.id}`
+        this.fsService.setDoc(pathToProduct, product)
+            .then((res: any) => {
+                console.group(res)
+            })
+            .catch((err: FirebaseError) => {
+                console.log(err.message)
+            })
+    }
+
 
     onCancel() {
         this.dialogRef.close();
     }
+
+
+    // onAddProductXXX() {
+    //     if (!this.editmode) {
+    //         console.log(this.form.value)
+    //         const product: Product = {
+    //             ...this.form.value,
+    //             imageUrl: null
+    //         }
+    //         console.log(product);
+    //         this.store.select(fromRoot.getCategoryId).subscribe((categoryId: string) => {
+    //             const pathToFrenchBasses = `categories/${categoryId}/products`
+    //             this.fsService.addDoc(pathToFrenchBasses, product)
+    //                 .then((docRef: DocumentReference) => {
+    //                     this.store.dispatch(new ADMIN.SetProductId(docRef.id))
+    //                     console.log(`product added; ${docRef.id}`)
+    //                     if (this.imageUpdated) {
+    //                         const pathToImageFile = `categories/${categoryId}/products/${docRef.id}`
+    //                         this.storageService.storeObject(pathToImageFile, this.imageFile)
+    //                             .then((downloadUrl: string) => {
+    //                                 console.log(`image file stored`)
+    //                                 const pathToProduct = `categories/${categoryId}/products/${docRef.id}`;
+    //                                 this.fsService.updateDocument(pathToProduct, { imageUrl: downloadUrl });
+    //                                 this.dialogRef.close();
+    //                             })
+    //                             .catch((err: StorageError) => {
+    //                                 console.log(`failed to store image file; ${err.message}`)
+    //                                 this.dialogRef.close();
+    //                             })
+    //                     } else {
+    //                         console.log('no image to store');
+    //                         this.dialogRef.close();
+    //                     }
+    //                 })
+    //                 .catch((err: FirestoreError) => {
+    //                     console.log(`failed to add product; ${err.message}`)
+    //                     this.dialogRef.close();
+    //                 })
+    //         })
+    //     } else {
+    //         console.log(this.form.value);
+    //         const product: Product = {
+    //             ...this.form.value,
+    //             imageUrl: this.imageUrl
+    //         }
+    //         console.log(product)
+    //         if (product.imageUrl) {
+    //             const pathToImageFile = `categories/${this.category.id}/products/${this.product.id}`
+    //             console.log(pathToImageFile);
+    //             this.storageService.storeObject(pathToImageFile, this.imageFile)
+    //                 .then((downloadUrl: string) => {
+    //                     console.log(`image file stored; ${downloadUrl}`)
+    //                 })
+    //                 .catch((err: StorageError) => {
+    //                     console.log(`failed to store image file; ${err.message}`)
+    //                 })
+    //                 .then(() => {
+    //                     const pathToProduct = `categories/${this.category.id}/products/${this.product.id}`;
+    //                     return this.fsService.setDoc(pathToProduct, product)
+
+    //                 })
+    //                 .then((res: any) => {
+    //                     console.log(`product updated; ${res}`)
+    //                     this.dialogRef.close();
+    //                 })
+    //                 .catch((err: FirestoreError) => {
+    //                     console.log(`failed to update product; ${err.message}`)
+    //                     this.dialogRef.close();
+    //                 })
+    //         } else {
+    //             const pathToProduct = `categories/${this.category.id}/products/${this.product.id}`;
+    //             return this.fsService.setDoc(pathToProduct, product)
+    //                 .then((res: any) => {
+    //                     console.log(`product updated; ${res}`)
+    //                     this.dialogRef.close();
+    //                 })
+    //                 .catch((err: FirestoreError) => {
+    //                     console.log(`failed to update product; ${err.message}`)
+    //                     this.dialogRef.close();
+    //                 })
+    //         }
+
+    //     }
+    // }
 }

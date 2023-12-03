@@ -51,10 +51,21 @@ export class FirestoreService {
         const docRef = doc(this.firestore, path)
         return deleteDoc(docRef);
     }
-
-
     collection(path) {
         const collectionRef = collection(this.firestore, path)
         return collectionData(collectionRef, { idField: 'id' })
+    }
+    updateArray(path, imageUrl) {
+        const arrayRef = doc(this.firestore, path)
+        return updateDoc(arrayRef, {
+            imageUrls: arrayUnion(imageUrl)
+        })
+    }
+    deleteStringFromArray(path: string, imageUrl: string) {
+        console.log(path, imageUrl)
+        const arrayRef = doc(this.firestore, path)
+        return updateDoc(arrayRef, {
+            imageUrls: arrayRemove(imageUrl)
+        })
     }
 }

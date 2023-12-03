@@ -1,218 +1,250 @@
-<!-- <div class="editmode">editmode: {{editmode}}</div>
-    <div class="image-updated">image updated: {{imageUpdated}}</div> -->
-<div *ngIf="imageUrls.length"
-    class="images"
-    style=" border:1px solid red">
-    <div class="image"
-        *ngFor="let imageUrl of imageUrls; index as i">
-        <img [src]="imageUrl"
-            style="max-width: 10rem;"
-            alt="">
-        <button mat-mini-fab
-            color="warn"
-            (click)="onDeleteImageFromImageUrls(i)">
-            <mat-icon fontIcon="delete"></mat-icon>
-        </button>
-
+<div class="app-add-product">
+    <div class="names">
+        <!-- <div class="name"
+            *ngFor="let name of array;let i = index">
+            <mat-icon fontIcon="arrow_left"
+                (click)="onMoveImage('left', i)"></mat-icon>{{name}}<mat-icon fontIcon="arrow_right"
+                (click)="onMoveImage('right', i)"></mat-icon>
+        </div> -->
     </div>
-</div>
-<!-- <img
-    [src]="imageUrls[0]"
-    alt=""> -->
-<form [formGroup]="form">
-    <div class="category-name">adding to: {{category.name}}</div>
-    <div class="left">
 
-        <div class="general">
-            <div class="title">general</div>
-            <mat-form-field style="display: none;">
-                <label>product id</label>
-                <input type=""
-                    readonly
-                    formControlName="id"
-                    matInput>
-            </mat-form-field>
-            <mat-form-field>
-                <label>name</label>
-                <input type="text"
-                    formControlName="name"
-                    matInput>
-            </mat-form-field>
-            <mat-form-field>
-                <label>description</label>
-                <textarea type="text"
-                    step="0.01"
-                    formControlName="description"
-                    matInput></textarea>
-            </mat-form-field>
-            <div class="split">
-                <mat-form-field>
-                    <label>color</label>
-                    <input type="text"
-                        formControlName="color"
-                        matInput>
-                </mat-form-field>
-                <mat-form-field style="display: none;">
-                    <label>image url</label>
-                    <input type="text"
-                        readonly
-                        formControlName="imageUrl"
-                        matInput>
-                </mat-form-field>
-                <mat-form-field>
-                    <label>material</label>
-                    <input type="text"
-                        formControlName="material"
-                        matInput>
-                </mat-form-field>
-                <mat-form-field>
-                    <label>weight</label>
-                    <input type="number"
-                        readonly
-                        formControlName="weight"
-                        matInput>
-                </mat-form-field>
-                <mat-form-field>
-                    <label>price</label>
-                    <input type="number"
-                        step="0.01"
-                        formControlName="price"
-                        matInput>
-                </mat-form-field>
-            </div>
-        </div>
-
-    </div>
-    <div class="bass">
-        <div class="title">bass</div>
-        <mat-form-field>
-            <label>scale</label>
-            <input type="text"
-                formControlName="scale"
-                matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <label>type of wood</label>
-            <input type="text"
-                formControlName="typeOfWood"
-                matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <label>year built</label>
-            <input type="text"
-                formControlName="yearBuilt"
-                matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <label>backboard</label>
-            <input type="text"
-                formControlName="backboard"
-                matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <label>bridge</label>
-            <input type="number"
-                step="0.1"
-                formControlName="bridge"
-                matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <label>mensuur</label>
-            <input type="number"
-                step="0.1"
-                formControlName="mensuur"
-                matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <label>string length</label>
-            <input type="number"
-                step="0.1"
-                formControlName="stringLength"
-                matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <label>top</label>
-            <input type="number"
-                step="0.1"
-                formControlName="top"
-                matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <label>middle</label>
-            <input type="number"
-                step="0.1"
-                formControlName="middle"
-                matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <label>bottom</label>
-            <input type="number"
-                step="0.1"
-                formControlName="bottom"
-                matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <label>depth</label>
-            <input type="number"
-                step="0.1"
-                formControlName="depth"
-                matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <label>length back plate</label>
-            <input type="number"
-                step="0.1"
-                formControlName="lengthBackPlate"
-                matInput>
-        </mat-form-field>
-    </div>
-    <div class="right">
-        <div class="amplifiers">
-            <div class="title">amplifiers</div>
-            <mat-form-field>
-                <label>type</label>
-                <input type="text"
-                    formControlName="type"
-                    matInput>
-            </mat-form-field>
-            <mat-form-field>
-                <label>output</label>
-                <input type="number"
-                    formControlName="output"
-                    matInput>
-            </mat-form-field>
-        </div>
-        <div class="image">
-            <div class="title">image</div>
-            <!-- <app-image></app-image> -->
-            <input #fileInput
-                style="display: none;"
-                type="file"
-                (change)="onImageInputChange($event)">
-            <div class="image-container">
-                <img [src]="imageUrl"
-                    alt="no image available">
-            </div>
-            <button mat-raised-button
-                color="primary"
-                (click)="fileInput.click()">{{imageFile ? 'update image':'select image'}}
+    <div class="images-container">
+        <div class="image-container"
+            *ngFor="let imageUrl of product.imageUrls; let i = index">
+            <mat-icon fontIcon="arrow_left"
+                (click)="onMoveImage('left', i)"></mat-icon>
+            <img [src]="imageUrl"
+                alt=""
+                (click)="onImage($event)">
+            <mat-icon fontIcon="arrow_right"
+                (click)="onMoveImage('right', i)"></mat-icon>
+            <button mat-mini-fab
+                (click)="onDeleteImage(img, i)">
+                <mat-icon fontIcon="delete"></mat-icon>
             </button>
-            <button *ngIf="editmode"
-                mat-raised-button
-                color="primary"
-                (click)="onDeleteImage()">delete image</button>
         </div>
-
-        <div class="buttons">
-            <button mat-raised-button
-                color="primary"
-                (click)="onAddProduct()">{{editmode ?'update ' + product.name:'add to ' + category.name}}</button>
-            <button mat-raised-button
-                color="primary"
-                (click)="onCancel()">cancel</button>
-        </div>
-
+        <div *ngIf="isStoringImage"
+            class="loading">Loading...</div>
     </div>
 
 
-</form>
+    <!-- <div class="images-container">
+        <div class="image-container"
+            *ngFor="let imageUrl of (product$|async)?.imageUrls; let i = index">
+            <mat-icon fontIcon="arrow_left"
+                (click)="onMoveImage('left', i)"></mat-icon>
+            <img [src]="imageUrl"
+                alt=""
+                (click)="onImage($event)">
+            <mat-icon fontIcon="arrow_right"
+                (click)="onMoveImage('right', i)"></mat-icon>
+            <button mat-mini-fab
+                (click)="onDeleteImage(img, i)">
+                <mat-icon fontIcon="delete"></mat-icon>
+            </button>
+        </div>
+        <div *ngIf="isStoringImage"
+            class="loading">Loading...</div>
+    </div> -->
+    <form [formGroup]="form">
+        <div class="category-name">adding to: {{category.name}}</div>
+        <div class="left">
+
+            <div class="general">
+                <div class="title">general</div>
+                <mat-form-field style="display: none;">
+                    <label>product id</label>
+                    <input type=""
+                        readonly
+                        formControlName="id"
+                        matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <label>name</label>
+                    <input type="text"
+                        formControlName="name"
+                        matInput>
+                </mat-form-field>
+                <mat-form-field *ngIf="editmode">
+                    <label>description</label>
+                    <textarea type="text"
+                        step="0.01"
+                        formControlName="description"
+                        matInput></textarea>
+                </mat-form-field>
+                <div class="split">
+                    <mat-form-field *ngIf="editmode">
+                        <label>color</label>
+                        <input type="text"
+                            formControlName="color"
+                            matInput>
+                    </mat-form-field>
+                    <mat-form-field style="display: none;">
+                        <label>image url</label>
+                        <input type="text"
+                            readonly
+                            formControlName="imageUrl"
+                            matInput>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="editmode">
+                        <label>material</label>
+                        <input type="text"
+                            formControlName="material"
+                            matInput>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="editmode">
+                        <label>weight</label>
+                        <input type="number"
+                            readonly
+                            formControlName="weight"
+                            matInput>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="editmode">
+                        <label>price</label>
+                        <input type="number"
+                            step="0.01"
+                            formControlName="price"
+                            matInput>
+                    </mat-form-field>
+                </div>
+            </div>
+
+        </div>
+        <div class="bass"
+            *ngIf="editmode">
+            <div class="title">bass</div>
+            <mat-form-field>
+                <label>scale</label>
+                <input type="text"
+                    formControlName="scale"
+                    matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <label>type of wood</label>
+                <input type="text"
+                    formControlName="typeOfWood"
+                    matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <label>year built</label>
+                <input type="text"
+                    formControlName="yearBuilt"
+                    matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <label>backboard</label>
+                <input type="text"
+                    formControlName="backboard"
+                    matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <label>bridge</label>
+                <input type="number"
+                    step="0.1"
+                    formControlName="bridge"
+                    matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <label>mensuur</label>
+                <input type="number"
+                    step="0.1"
+                    formControlName="mensuur"
+                    matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <label>string length</label>
+                <input type="number"
+                    step="0.1"
+                    formControlName="stringLength"
+                    matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <label>top</label>
+                <input type="number"
+                    step="0.1"
+                    formControlName="top"
+                    matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <label>middle</label>
+                <input type="number"
+                    step="0.1"
+                    formControlName="middle"
+                    matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <label>bottom</label>
+                <input type="number"
+                    step="0.1"
+                    formControlName="bottom"
+                    matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <label>depth</label>
+                <input type="number"
+                    step="0.1"
+                    formControlName="depth"
+                    matInput>
+            </mat-form-field>
+            <mat-form-field>
+                <label>length back plate</label>
+                <input type="number"
+                    step="0.1"
+                    formControlName="lengthBackPlate"
+                    matInput>
+            </mat-form-field>
+        </div>
+        <div class="right">
+            <div class="amplifiers"
+                *ngIf="editmode">
+                <div class="title">amplifiers</div>
+                <mat-form-field>
+                    <label>type</label>
+                    <input type="text"
+                        formControlName="type"
+                        matInput>
+                </mat-form-field>
+                <mat-form-field>
+                    <label>output</label>
+                    <input type="number"
+                        formControlName="output"
+                        matInput>
+                </mat-form-field>
+            </div>
+            <div class="image"
+                *ngIf="editmode">
+                <div class="title">image</div>
+                <!-- <app-image></app-image> -->
+                <input #fileInput
+                    style="display: none;"
+                    type="file"
+                    (change)="onImageInputChange($event)">
+                <button mat-raised-button
+                    color="primary"
+                    (click)="fileInput.click()">add image
+                </button>
+                <!-- <button *ngIf="editmode"
+                    mat-raised-button
+                    color="primary"
+                    (click)="onDeleteImage()">delete image</button> -->
+            </div>
+
+            <div class="buttons">
+                <button *ngIf="!editmode"
+                    mat-raised-button
+                    color="primary"
+                    (click)="onAddProduct()">add to: {{category.name}}</button>
+                <button *ngIf="editmode"
+                    mat-raised-button
+                    color="primary"
+                    (click)="onUpdateProduct()">update {{product.name}}</button>
+                <button mat-raised-button
+                    color="primary"
+                    (click)="onCancel()">cancel</button>
+            </div>
+
+        </div>
+
+
+    </form>
+</div>
