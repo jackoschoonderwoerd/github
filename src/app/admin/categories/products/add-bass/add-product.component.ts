@@ -22,6 +22,7 @@ import { Observable, take } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ImageBlowupComponent } from './images/image-blowup/image-blowup.component';
 
 @Component({
     selector: 'app-add-bass',
@@ -52,7 +53,7 @@ export class AddProductComponent implements OnInit {
     product$: Observable<any>
     imageUrls: string[] = [];
     isStoringImage: boolean = false
-    array: string[] = ['aad', 'bas', 'çor', 'daan', 'érid', 'frits'];
+
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: any,
@@ -122,15 +123,6 @@ export class AddProductComponent implements OnInit {
             ...product
         })
     }
-    // onImageInputChange(e) {
-    //     this.imageUpdated = true;
-    //     this.imageFile = e.target.files[0]
-    //     const reader = new FileReader();
-    //     reader.onload = () => {
-    //         this.imageUrl = reader.result as string;
-    //     }
-    //     reader.readAsDataURL(this.imageFile)
-    // }
 
     onImageInputChange(e) {
         this.isStoringImage = true
@@ -158,21 +150,27 @@ export class AddProductComponent implements OnInit {
                 console.log(`failed to update imagerUrlArray; ${err.message}`)
                 this.isStoringImage = false;
             })
-
-        return;
     }
 
-    addImageStorage(image: File) {
+    onImage(imageUrl) {
+        this.dialog.open(ImageBlowupComponent, {
+            data: {
+                imageUrl
+            }
+        })
+    }
+
+    private addImageStorage(image: File) {
         console.log(image.name)
         const pathToImageStorage = `categories/${this.category.id}/products/${this.product.id}/images/${image.name}`
         return this.storageService.storeObject(pathToImageStorage, image)
 
     }
 
-    addUrlToProductImagesArray(imageUrl: string) {
+    private addUrlToProductImagesArray(imageUrl: string) {
         const pathToProductImageUrlsArray = `categories/${this.category.id}/products/${this.product.id}`
         console.log(imageUrl);
-        return this.fsService.updateArray(pathToProductImageUrlsArray, imageUrl)
+        return this.fsService.addElementToArray(pathToProductImageUrlsArray, imageUrl)
 
     }
     onDeleteImage(imageUrl: string, i: number) {
@@ -214,80 +212,31 @@ export class AddProductComponent implements OnInit {
     }
 
     onMoveImage(direction: string, index1: number) {
-        console.log(index1)
         let index2 = 0;
         if (direction == 'left') {
             index2 = index1 - 1;
         } else {
             index2 = index1 + 1;
         }
-        if (index1 >= 0 && index1 < this.product.imageUrls.length && index2 >= 0 && index2 < this.array.length) {
-            let temp = this.product.imageUrls[index1];
-            this.product.imageUrls[index1] = this.product.imageUrls[index2];
-            this.product.imageUrls[index2] = temp;
-        } else {
-            console.log("Invalid indexes provided.");
-        }
-        console.log(this.product.imageUrls)
-        // console.log(index1)
-        // let index2 = 0;
-        // if (direction == 'left') {
-        //     index2 = index1 - 1;
-        // } else {
-        //     index2 = index1 + 1;
-        // }
-        // if (index1 >= 0 && index1 < this.array.length && index2 >= 0 && index2 < this.array.length) {
-        //     let temp = this.array[index1];
-        //     this.array[index1] = this.array[index2];
-        //     this.array[index2] = temp;
-        // } else {
-        //     console.log("Invalid indexes provided.");
-        // }
-        // console.log(this.array)
-    }
-
-
-    switchElements(array, index1, index2) {
-        if (index1 >= 0 && index1 < array.length && index2 >= 0 && index2 < array.length) {
-            let temp = array[index1];
-            array[index1] = array[index2];
-            array[index2] = temp;
-        } else {
-            console.log("Invalid indexes provided.");
-        }
-    }
-
-
-
-    onDeleteImageXX() {
-        const dialogRef = this.dialog.open(ConfirmComponent, {
-            data: {
-                message: 'this will premanently delete the image'
-            }
-        })
-        dialogRef.afterClosed().subscribe((res: boolean) => {
-            console.log(res);
-            if (res) {
-                const pathToImageFile = `categories/${this.category.id}/products/${this.product.id}`
-                this.storageService.deleteObject(pathToImageFile)
+        this.product$.pipe(take(1)).subscribe((product: Product) => {
+            if (index1 >= 0 && index1 < product.imageUrls.length && index2 >= 0 && index2 < product.imageUrls.length) {
+                let temp = product.imageUrls[index1];
+                product.imageUrls[index1] = product.imageUrls[index2];
+                product.imageUrls[index2] = temp;
+                const path = `categories/${this.category.id}/products/${this.product.id}`
+                this.fsService.updateDocument(path, { imageUrls: product.imageUrls })
                     .then((res: any) => {
-                        console.log(`file deleted from storage ${res}`)
-                        const pathToProduct = `categories/${this.category.id}/products/${this.product.id}`
-                        this.fsService.updateDocument(pathToProduct, { imageUrl: null })
-                            .then((res: any) => {
-                                console.log(`imageUrl updated; ${res}`)
-                                this.imageUrl = null;
-                            })
-                            .catch((err: FirebaseError) => {
-                                console.log(`failed to update imageUrl; ${err.message}`)
-                            })
+                        console.log(`array updated; ${res}`)
                     })
-                    .catch((err: StorageError) => {
-                        console.log(`failed to delete file from storage; ${err.message}`)
-                    })
+                    .catch((err: FirebaseError) => {
+                        console.log(`failed to update array; ${err.message}`)
+                    });
+            } else {
+                console.log("Invalid indexes provided.");
             }
         })
     }
+
 
     onAddProduct() {
         const product: Product = {
@@ -330,88 +279,4 @@ export class AddProductComponent implements OnInit {
     onCancel() {
         this.dialogRef.close();
     }
-
-
-    // onAddProductXXX() {
-    //     if (!this.editmode) {
-    //         console.log(this.form.value)
-    //         const product: Product = {
-    //             ...this.form.value,
-    //             imageUrl: null
-    //         }
-    //         console.log(product);
-    //         this.store.select(fromRoot.getCategoryId).subscribe((categoryId: string) => {
-    //             const pathToFrenchBasses = `categories/${categoryId}/products`
-    //             this.fsService.addDoc(pathToFrenchBasses, product)
-    //                 .then((docRef: DocumentReference) => {
-    //                     this.store.dispatch(new ADMIN.SetProductId(docRef.id))
-    //                     console.log(`product added; ${docRef.id}`)
-    //                     if (this.imageUpdated) {
-    //                         const pathToImageFile = `categories/${categoryId}/products/${docRef.id}`
-    //                         this.storageService.storeObject(pathToImageFile, this.imageFile)
-    //                             .then((downloadUrl: string) => {
-    //                                 console.log(`image file stored`)
-    //                                 const pathToProduct = `categories/${categoryId}/products/${docRef.id}`;
-    //                                 this.fsService.updateDocument(pathToProduct, { imageUrl: downloadUrl });
-    //                                 this.dialogRef.close();
-    //                             })
-    //                             .catch((err: StorageError) => {
-    //                                 console.log(`failed to store image file; ${err.message}`)
-    //                                 this.dialogRef.close();
-    //                             })
-    //                     } else {
-    //                         console.log('no image to store');
-    //                         this.dialogRef.close();
-    //                     }
-    //                 })
-    //                 .catch((err: FirestoreError) => {
-    //                     console.log(`failed to add product; ${err.message}`)
-    //                     this.dialogRef.close();
-    //                 })
-    //         })
-    //     } else {
-    //         console.log(this.form.value);
-    //         const product: Product = {
-    //             ...this.form.value,
-    //             imageUrl: this.imageUrl
-    //         }
-    //         console.log(product)
-    //         if (product.imageUrl) {
-    //             const pathToImageFile = `categories/${this.category.id}/products/${this.product.id}`
-    //             console.log(pathToImageFile);
-    //             this.storageService.storeObject(pathToImageFile, this.imageFile)
-    //                 .then((downloadUrl: string) => {
-    //                     console.log(`image file stored; ${downloadUrl}`)
-    //                 })
-    //                 .catch((err: StorageError) => {
-    //                     console.log(`failed to store image file; ${err.message}`)
-    //                 })
-    //                 .then(() => {
-    //                     const pathToProduct = `categories/${this.category.id}/products/${this.product.id}`;
-    //                     return this.fsService.setDoc(pathToProduct, product)
-
-    //                 })
-    //                 .then((res: any) => {
-    //                     console.log(`product updated; ${res}`)
-    //                     this.dialogRef.close();
-    //                 })
-    //                 .catch((err: FirestoreError) => {
-    //                     console.log(`failed to update product; ${err.message}`)
-    //                     this.dialogRef.close();
-    //                 })
-    //         } else {
-    //             const pathToProduct = `categories/${this.category.id}/products/${this.product.id}`;
-    //             return this.fsService.setDoc(pathToProduct, product)
-    //                 .then((res: any) => {
-    //                     console.log(`product updated; ${res}`)
-    //                     this.dialogRef.close();
-    //                 })
-    //                 .catch((err: FirestoreError) => {
-    //                     console.log(`failed to update product; ${err.message}`)
-    //                     this.dialogRef.close();
-    //                 })
-    //         }
-
-    //     }
-    // }
 }

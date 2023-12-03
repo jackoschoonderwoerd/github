@@ -1,41 +1,14 @@
 <div class="app-add-product">
-    <div class="names">
-        <!-- <div class="name"
-            *ngFor="let name of array;let i = index">
-            <mat-icon fontIcon="arrow_left"
-                (click)="onMoveImage('left', i)"></mat-icon>{{name}}<mat-icon fontIcon="arrow_right"
-                (click)="onMoveImage('right', i)"></mat-icon>
-        </div> -->
-    </div>
 
     <div class="images-container">
-        <div class="image-container"
-            *ngFor="let imageUrl of product.imageUrls; let i = index">
-            <mat-icon fontIcon="arrow_left"
-                (click)="onMoveImage('left', i)"></mat-icon>
-            <img [src]="imageUrl"
-                alt=""
-                (click)="onImage($event)">
-            <mat-icon fontIcon="arrow_right"
-                (click)="onMoveImage('right', i)"></mat-icon>
-            <button mat-mini-fab
-                (click)="onDeleteImage(img, i)">
-                <mat-icon fontIcon="delete"></mat-icon>
-            </button>
-        </div>
-        <div *ngIf="isStoringImage"
-            class="loading">Loading...</div>
-    </div>
-
-
-    <!-- <div class="images-container">
         <div class="image-container"
             *ngFor="let imageUrl of (product$|async)?.imageUrls; let i = index">
             <mat-icon fontIcon="arrow_left"
                 (click)="onMoveImage('left', i)"></mat-icon>
-            <img [src]="imageUrl"
+            <img class="image"
+                [src]="imageUrl"
                 alt=""
-                (click)="onImage($event)">
+                (click)="onImage(imageUrl)">
             <mat-icon fontIcon="arrow_right"
                 (click)="onMoveImage('right', i)"></mat-icon>
             <button mat-mini-fab
@@ -45,7 +18,7 @@
         </div>
         <div *ngIf="isStoringImage"
             class="loading">Loading...</div>
-    </div> -->
+    </div>
     <form [formGroup]="form">
         <div class="category-name">adding to: {{category.name}}</div>
         <div class="left">
@@ -223,10 +196,6 @@
                     color="primary"
                     (click)="fileInput.click()">add image
                 </button>
-                <!-- <button *ngIf="editmode"
-                    mat-raised-button
-                    color="primary"
-                    (click)="onDeleteImage()">delete image</button> -->
             </div>
 
             <div class="buttons">

@@ -55,7 +55,7 @@ export class FirestoreService {
         const collectionRef = collection(this.firestore, path)
         return collectionData(collectionRef, { idField: 'id' })
     }
-    updateArray(path, imageUrl) {
+    addElementToArray(path, imageUrl) {
         const arrayRef = doc(this.firestore, path)
         return updateDoc(arrayRef, {
             imageUrls: arrayUnion(imageUrl)
