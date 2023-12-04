@@ -1,20 +1,23 @@
 <div class="page app-product-categories">
     <div class="content">
-        <div class="title">{{title}}</div>
+        <!-- <div class="title">{{title}}</div> -->
         <ul class="categories-list">
             <li class="categories-list-item"
                 *ngFor="let category of categories$|async">
-                <button color="primary"
-                    mat-mini-fab
-                    (click)="onEdit(category.id)">
-                    <mat-icon fontIcon="edit"></mat-icon>
-                    <!-- <span class="mat-icon">edit</span> -->
-                </button>
-                <button mat-mini-fab
-                    color="warn"
-                    (click)="onDelete(category.id)">
-                    <mat-icon fontIcon="delete"></mat-icon>
-                </button>
+                <div class="edit-delete-buttons"
+                    *ngIf="isLoggedIn">
+                    <button color="primary"
+                        mat-mini-fab
+                        (click)="onEdit(category.id)">
+                        <mat-icon fontIcon="edit"></mat-icon>
+                        <!-- <span class="mat-icon">edit</span> -->
+                    </button>
+                    <button mat-mini-fab
+                        color="warn"
+                        (click)="onDelete(category.id)">
+                        <mat-icon fontIcon="delete"></mat-icon>
+                    </button>
+                </div>
                 <button (click)="onCategorySelected(category.id)"
                     mat-raised-button
                     color="primary">{{category.name}}
@@ -23,6 +26,7 @@
 
         </ul>
         <button mat-raised-button
+            *ngIf="isLoggedIn"
             (click)="onAddCategory()">add category
         </button>
     </div>

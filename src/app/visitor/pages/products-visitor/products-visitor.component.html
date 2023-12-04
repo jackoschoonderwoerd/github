@@ -1,0 +1,74 @@
+<mat-accordion>
+    <mat-expansion-panel hideToggle
+        *ngFor="let product of products$|async">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{product.name}}
+            </mat-panel-title>
+            <mat-panel-description>
+                <img *ngIf="product.imageUrls && product.imageUrls.length"
+                    [src]="product.imageUrls[0]">
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="id">{{product.id}}</div>
+
+        <div class="name">{{product.name}}</div>
+        <div class="description"
+            *ngIf="product.description">{{product.description}}</div>
+
+
+        <div class="price"
+            *ngIf="product.price">{{product.price}}</div>
+        <div class="bass">
+
+            <div *ngIf="product.scale"
+                class="scale"><span>scale:</span>{{product.scale}}</div>
+            <div *ngIf="product.typeOfWood"
+                class="typeOfWood"><span>type of wood:</span>{{product.typeOfWood}}</div>
+            <div *ngIf="product.origin"
+                class="origin"><span>origin:</span>{{product.origin}}</div>
+            <div *ngIf="product.yearBuilt"
+                class="yearBuilt"><span>year built:</span>{{product.typeOfWood}}</div>
+            <div *ngIf="product.backboard"
+                class="backboard"><span>back board;</span>{{product.backboard}}</div>
+            <div *ngIf="product.color"
+                class="color"><span>bridge:</span>{{product.color}}</div>
+            <div *ngIf="product.bridge"
+                class="bridge">{{product.bridge}}</div>
+            <div *ngIf="product.mensuur"
+                class="mensuur"><span>mensuur:</span>{{product.mensuur}}</div>
+            <div *ngIf="product.stringLength"
+                class="stringLength"><span>string length:</span>{{product.stringlength}}</div>
+            <div *ngIf="product.top"
+                class="top"><span>top:</span>{{product.top}}</div>
+            <div *ngIf="product.middle"
+                class="middle"><span>middle:</span>{{product.middle}}</div>
+            <div *ngIf="product.bottom"
+                class="bottom"><span>bottom:</span>{{product.bottom}}</div>
+            <div *ngIf="product.depth"
+                class="depth"><span>depth:</span>{{product.depth}}</div>
+            <div *ngIf="product.lengthBackplate"
+                class="lengthBackplate"><span>length back plate</span>{{product.lengthBackplate}}</div>
+        </div>
+
+        <div class="amp">
+
+            <div *ngIf="product.type"
+                class="type"><span>type:</span>{{product.type}}</div>
+            <div *ngIf="product.output"
+                class="output"><span>output:</span>{{product.output}}</div>
+        </div>
+
+        <div *ngIf="product.weight"
+            class="weight"></div>
+        <div *ngIf="product.material"
+            class="material"></div>
+    </mat-expansion-panel>
+</mat-accordion>
+
+<!--
+<pre>
+
+    {{products$|async|json}}
+</pre> -->

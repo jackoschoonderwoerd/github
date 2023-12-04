@@ -32,6 +32,9 @@ li {
 }
 .page {
     padding: 3rem;
+    @media screen and (max-width: 600px) {
+        padding: 0.5rem;
+    }
 }
 .nested-component {
     padding: 1rem;

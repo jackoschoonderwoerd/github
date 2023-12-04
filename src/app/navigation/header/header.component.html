@@ -1,38 +1,55 @@
 <mat-toolbar>
-    <ul class="toolbar-list-left">
-        <li class="toolbar-list-item"
-            routerLinkActive="link-active"
-            [routerLinkActiveOptions]="{exact:true}"><a routerLink="home">home</a></li>
-        <li class="toolbar-list-item"><a routerLinkActive="link-active"
-                routerLink="contact"
-                [routerLinkActiveOptions]="{exact:true}">contact</a></li>
-        <li class="toolbar-list-item"><a routerLinkActive="link-active"
-                routerLink="atelier"
-                [routerLinkActiveOptions]="{exact:true}">atelier</a></li>
-        <li *ngIf="(user$|async)"
-            class="toolbar-list-item"><a routerLinkActive="link-active"
-                routerLink="products"
-                [routerLinkActiveOptions]="{exact:true}">products</a></li>
-    </ul>
+    <button mat-icon-button
+        class="menu"
+        (click)="onToggleSidenav()"><a>
+            <mat-icon>menu</mat-icon>
+        </a></button>
+    <div class="wide-screen-only">
+        <ul class="toolbar-list-left">
+            <li class="toolbar-list-item"
+                routerLinkActive="link-active"
+                [routerLinkActiveOptions]="{exact:true}"><a routerLink="home">home</a></li>
+            <li class="toolbar-list-item"><a routerLinkActive="link-active"
+                    routerLink="contact"
+                    [routerLinkActiveOptions]="{exact:true}">contact</a></li>
+            <li class="toolbar-list-item"><a routerLinkActive="link-active"
+                    routerLink="atelier"
+                    [routerLinkActiveOptions]="{exact:true}">atelier</a></li>
+            <li class="toolbar-list-item"><a routerLinkActive="link-active"
+                    routerLink="products"
+                    [routerLinkActiveOptions]="{exact:true}">products</a></li>
+        </ul>
 
-    <ul class="toolbar-list-center">
-        <li *ngIf="user$|async">{{(user$|async).email}}</li>
-        <li class="store"
-            routerLink="store"></li><a routerLink="store"
-            routerLinkActive="link-active"
-            [routerLinkActiveOptions]="{exact:true}">store</a>
-    </ul>
+        <ul class="toolbar-list-center">
+            <li *ngIf="user$|async">{{(user$|async).email}}</li>
+            <li class="store"
+                routerLink="store"></li><a routerLink="store"
+                routerLinkActive="link-active"
+                [routerLinkActiveOptions]="{exact:true}">store</a>
+        </ul>
 
-    <ul class="toolbar-list-right">
-        <li *ngIf="!(user$|async)"
-            class="toolbar-list-item"
+        <!-- <ul class="toolbar-list-right">
+            <li
+                class="toolbar-list-item"
+                > -->
+        <button *ngIf="!(user$|async)"
+            mat-icon-button
             (click)="onLogIn()">
-            <span class="material-icons">login</span>
-        </li>
-        <li *ngIf="(user$|async)"
-            class="toolbar-list-item"
-            (click)="onLogOut()">
-            <span class="material-icons">logout</span>
-        </li>
-    </ul>
+            <mat-icon>login</mat-icon>
+        </button>
+        <!-- <span class="material-icons">login</span> -->
+        <!-- </li>
+            <li *ngIf="(user$|async)"
+                class="toolbar-list-item"
+                > -->
+        <button *ngIf="(user$|async)"
+            (click)="onLogOut()"
+            mat-icon-button>
+            <mat-icon>logout</mat-icon>
+        </button>
+        <!-- <span class="material-icons">logout</span> -->
+        <!-- </li>
+        </ul> -->
+    </div>
+
 </mat-toolbar>

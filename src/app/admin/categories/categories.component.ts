@@ -14,6 +14,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { FirebaseError } from '@angular/fire/app';
 import { ConfirmComponent } from 'src/app/shared/confirm/confirm.component';
 import { ProductsComponent } from './products/products.component';
+import { Auth, onAuthStateChanged, User as FirebaseUser } from '@angular/fire/auth';
+
 
 
 @Component({
@@ -33,18 +35,32 @@ import { ProductsComponent } from './products/products.component';
 
 
 export class CategoriesComponent implements OnInit {
-    categories: string[] = ['amplifiers', 'german basses']
-    title: string = 'CategoriesComponent'
+    categories: string[] = ['amplifiers', 'german basses'];
+    title: string = 'CategoriesComponent';
+    isLoggedIn: boolean = false;
 
     categories$: Observable<DocumentData>
 
     constructor(
         private store: Store<fromRoot.State>,
         private fsService: FirestoreService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private afAuth: Auth
     ) { }
 
     ngOnInit(): void {
+
+        onAuthStateChanged(this.afAuth, (user: FirebaseUser) => {
+            if (user) {
+                this.isLoggedIn = true;
+                // this.user$ = new Observable<FirebaseUser>((subcriber: any) => {
+                //     subcriber.next(user)
+                // })
+            } else {
+                this.isLoggedIn = false;
+            }
+        })
+
         const path = `categories`
         this.categories$ = this.fsService.collection(path);
     }

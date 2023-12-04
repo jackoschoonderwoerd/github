@@ -11,6 +11,10 @@
             display: flex;
             flex-direction: column;
             gap: 0.3rem;
+            .edit-delete-buttons {
+                display: flex;
+                gap: 1rem;
+            }
             .categories-list-item {
                 display: flex;
                 gap: 1rem;

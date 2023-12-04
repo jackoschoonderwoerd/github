@@ -20,6 +20,8 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { AddProductComponent } from './add-bass/add-product.component';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { StorageError } from '@angular/fire/storage';
+import { Auth, User as FirebaseUser, onAuthStateChanged } from '@angular/fire/auth';
+
 
 @Component({
     selector: 'app-products',
@@ -35,16 +37,31 @@ export class ProductsComponent implements OnInit {
     category$: Observable<DocumentData>;
     category: Category
     products$: Observable<DocumentData>
+    user: FirebaseUser;
+    user$: Observable<FirebaseUser>
+    isLoggedIn: boolean = false
 
     constructor(
         private store: Store<fromRoot.State>,
         private dialog: MatDialog,
         private fsService: FirestoreService,
-        private storageService: StorageService
+        private storageService: StorageService,
+        private afAuth: Auth
 
     ) { }
 
     ngOnInit(): void {
+
+        onAuthStateChanged(this.afAuth, (user: FirebaseUser) => {
+            if (user) {
+                this.isLoggedIn = true;
+                this.user$ = new Observable<FirebaseUser>((subcriber: any) => {
+                    subcriber.next(user)
+                })
+            }
+        })
+
+
         this.store.select(fromRoot.getCategoryId).subscribe((categoryId: any) => {
             if (categoryId) {
                 // this.categoryId = categoryId
@@ -65,6 +82,7 @@ export class ProductsComponent implements OnInit {
             }
         })
     }
+
     onEdit(product) {
         // this.store.dispatch(new ADMIN.SetProductId(productId))
         this.dialog.open(AddProductComponent, {

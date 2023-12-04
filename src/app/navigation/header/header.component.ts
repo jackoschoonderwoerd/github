@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatIconModule } from '@angular/material/icon'
@@ -8,18 +8,26 @@ import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 
 import { User as FirebaseUser } from "@angular/fire/auth";
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
     selector: 'app-header',
     standalone: true,
-    imports: [CommonModule, MatToolbarModule, RouterModule, MatIconModule],
+    imports: [
+        CommonModule,
+        MatToolbarModule,
+        RouterModule,
+        MatIconModule,
+        MatButtonModule
+    ],
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
 
     user$: Observable<FirebaseUser>
+    @Output() sidenavToggle = new EventEmitter<void>()
 
     constructor(
         private authService: AuthService,
@@ -37,6 +45,9 @@ export class HeaderComponent implements OnInit {
                 this.user$ = null;
             }
         })
+    }
+    onToggleSidenav() {
+        this.sidenavToggle.emit()
     }
 
     onLogIn() {

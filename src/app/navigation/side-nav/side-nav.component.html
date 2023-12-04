@@ -1,0 +1,24 @@
+<div class="app-side-nav">
+    <mat-form-field>
+        <mat-label>Shop</mat-label>
+        <mat-select (valueChange)="onCategorySelected($event)">
+            <mat-option *ngFor="let category of categories$|async"
+                [value]="category.id">{{category.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-nav-list>
+        <mat-list-item>
+            <a>home</a>
+        </mat-list-item>
+        <mat-list-item>
+            <a>atelier</a>
+        </mat-list-item>
+        <mat-list-item>
+            <a>contact</a>
+        </mat-list-item>
+    </mat-nav-list>
+
+    <button (click)="onCloseSidenav()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>

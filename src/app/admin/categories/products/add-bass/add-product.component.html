@@ -1,16 +1,20 @@
 <div class="app-add-product">
-
+    <div class="category-name">adding to: {{category.name}}</div>
     <div class="images-container">
         <div class="image-container"
             *ngFor="let imageUrl of (product$|async)?.imageUrls; let i = index">
-            <mat-icon fontIcon="arrow_left"
-                (click)="onMoveImage('left', i)"></mat-icon>
+            <!-- <mat-icon fontIcon="arrow_left"
+                (click)="onMoveImage('left', i)"></mat-icon> -->
+            <div class="arrows">
+                <mat-icon (click)="onMoveImage('left', i)">keyboard_arrow_up</mat-icon>
+                <mat-icon (click)="onMoveImage('right', i)">keyboard_arrow_down</mat-icon>
+            </div>
             <img class="image"
                 [src]="imageUrl"
                 alt=""
                 (click)="onImage(imageUrl)">
-            <mat-icon fontIcon="arrow_right"
-                (click)="onMoveImage('right', i)"></mat-icon>
+            <!-- <mat-icon fontIcon="arrow_right"
+                (click)="onMoveImage('right', i)"></mat-icon> -->
             <button mat-mini-fab
                 (click)="onDeleteImage(img, i)">
                 <mat-icon fontIcon="delete"></mat-icon>
@@ -18,9 +22,20 @@
         </div>
         <div *ngIf="isStoringImage"
             class="loading">Loading...</div>
+        <div class="image-interface"
+            *ngIf="editmode">
+            <input #fileInput
+                style="display: none;"
+                type="file"
+                (change)="onImageInputChange($event)">
+            <button mat-raised-button
+                color="primary"
+                (click)="fileInput.click()">add image
+            </button>
+        </div>
     </div>
+
     <form [formGroup]="form">
-        <div class="category-name">adding to: {{category.name}}</div>
         <div class="left">
 
             <div class="general">
@@ -184,19 +199,7 @@
                         matInput>
                 </mat-form-field>
             </div>
-            <div class="image"
-                *ngIf="editmode">
-                <div class="title">image</div>
-                <!-- <app-image></app-image> -->
-                <input #fileInput
-                    style="display: none;"
-                    type="file"
-                    (change)="onImageInputChange($event)">
-                <button mat-raised-button
-                    color="primary"
-                    (click)="fileInput.click()">add image
-                </button>
-            </div>
+
 
             <div class="buttons">
                 <button *ngIf="!editmode"
