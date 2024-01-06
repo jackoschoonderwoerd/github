@@ -1,0 +1,73 @@
+.background-image {
+    height: 425px;
+    background-image: url("../../../../assets/images/contrabasses-row.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid red;
+    .credentials {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .title {
+            font-size: var(--font-size-xxxl);
+            font-weight: bolder;
+        }
+        .name {
+            font-size: var(--font-size-xxl);
+            font-weight: bolder;
+        }
+    }
+}
+.page {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    .top-content {
+        padding: 0 5rem;
+        .header {
+            font-size: var(--font-size-xxl);
+        }
+        .content {
+            font-size: var(--font-size-l);
+        }
+        .news {
+            .header {
+            }
+            .content {
+                display: flex;
+                justify-content: space-between;
+                .date {
+                }
+            }
+        }
+    }
+    .images {
+        display: grid;
+        grid-template-columns: repeat (3, 1fr);
+        gap: 1rem;
+        // grid-template-areas:
+        //     "left"
+        //     "middle"
+        //     "right";
+        img {
+            width: 100%;
+        }
+        .img-1 {
+            grid-column: 1/2;
+        }
+        .img-2 {
+            grid-column: 2/3;
+        }
+        .img-3 {
+            grid-column: 3/4;
+        }
+    }
+    .bottom-content {
+        padding: 0 5rem;
+    }
+}
+// assets/images/contrabasses-row.png

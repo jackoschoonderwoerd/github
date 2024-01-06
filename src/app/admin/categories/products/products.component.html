@@ -1,6 +1,12 @@
 <div class="nested-component products-component">
     <div class="title">{{title}}</div>
-    <div class="category-name">{{(category$|async)?.name}}</div>
+    <div *ngIf="(category$|async)?.name"
+        class="category-name">{{(category$|async)?.name}}</div>
+    <div *ngIf="!(category$|async)?.name"
+        class="category-name">select category</div>
+
+    <div class="select-category"
+        *ngIf="!(products$|async)?.length">no products yet</div>
     <ul class="products-list">
         <li class="products-list-item"
             *ngFor="let product of products$|async">
@@ -32,5 +38,5 @@
     <button *ngIf="category"
         mat-raised-button
         color="primary"
-        (click)="onAddProduct()">add to {{(category$|async)?.name}}</button>
+        (click)="onAddProduct(category.id)">add to {{(category$|async)?.name}}</button>
 </div>

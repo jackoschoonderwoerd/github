@@ -1,0 +1,41 @@
+.buttons {
+    border: 2px solid yellow;
+    width: 100%;
+    // position: absolute;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    // .previous {
+    // }
+    // .next {
+    //     right: 0;
+    // }
+}
+
+.images-container {
+    border: 1px solid red;
+    .images {
+        margin: auto;
+        position: relative;
+        // max-width: 500px;
+        width: 60%;
+        img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            // width: calc(100% - 6px);
+            border: 3px solid var(--ochre);
+            opacity: 0;
+        }
+        .selected {
+            opacity: 1;
+            transition: opacity 1000ms ease-in-out;
+        }
+        .unselected {
+            opacity: 0;
+            transition: opacity 1000ms ease-in-out;
+        }
+    }
+}

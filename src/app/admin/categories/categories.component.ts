@@ -15,6 +15,7 @@ import { FirebaseError } from '@angular/fire/app';
 import { ConfirmComponent } from 'src/app/shared/confirm/confirm.component';
 import { ProductsComponent } from './products/products.component';
 import { Auth, onAuthStateChanged, User as FirebaseUser } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 
 
@@ -45,7 +46,8 @@ export class CategoriesComponent implements OnInit {
         private store: Store<fromRoot.State>,
         private fsService: FirestoreService,
         private dialog: MatDialog,
-        private afAuth: Auth
+        private afAuth: Auth,
+        private router: Router
     ) { }
 
     ngOnInit(): void {
@@ -67,7 +69,9 @@ export class CategoriesComponent implements OnInit {
 
     onCategorySelected(categoryId: string) {
         console.log(categoryId)
+
         this.store.dispatch(new ADMIN.SetCategoryId(categoryId))
+
     }
     onAddCategory() {
         this.dialog.open(AddCategoryComponent)

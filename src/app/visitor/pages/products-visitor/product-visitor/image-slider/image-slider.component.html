@@ -1,0 +1,19 @@
+<div class="buttons-container">
+    <div class="buttons">
+        <button class="previous"
+            (click)="onPrevious()">previous</button>
+        <button class="next"
+            (click)="onNext()">next</button>
+    </div>
+</div>
+<div *ngIf="imageUrls.length > 0"
+    class="images-container">
+    <div class="images"
+        *ngFor="let url of imageUrls; let i = index">
+        <img [ngClass]="selectedIndex === i ? 'selected':'unselected'"
+            [src]="url"
+            alt=""
+            (click)="showLargeImage(i)">
+    </div>
+    {{selectedIndex}}
+</div>

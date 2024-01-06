@@ -4,10 +4,12 @@
         <app-side-nav (closeSidenav)="sidenav.toggle()"></app-side-nav>
     </mat-sidenav>
     <mat-sidenav-content>
-        <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+        <app-header *ngIf="showHeaderFooter"
+            (sidenavToggle)="sidenav.toggle()"></app-header>
         <!-- <button (click)="sidenav.toggle()">Show sidenav</button> -->
         <main>
             <router-outlet></router-outlet>
         </main>
+        <app-footer *ngIf="showHeaderFooter"></app-footer>
     </mat-sidenav-content>
 </mat-sidenav-container>

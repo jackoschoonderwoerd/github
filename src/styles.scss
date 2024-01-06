@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import "./styles/variables";
 
 html,
 body {
@@ -43,4 +44,24 @@ li {
 .mat-input-placeholder {
     color: red; /* Any color */
     font-style: italic;
+}
+.secondary-item-title {
+}
+.title {
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 0.3rem 0;
+}
+.secondary-item-form-container {
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        .form-field {
+            display: grid;
+            grid-template-columns: 8rem 1fr;
+            // display: flex;
+            // justify-content: space-between;
+        }
+    }
 }

@@ -17,10 +17,11 @@ import * as ADMIN from 'src/app/admin/store/admin.actions'
 
 
 import { ProductDetailsComponent } from './product-details/product-details.component';
-import { AddProductComponent } from './add-bass/add-product.component';
+import { AddProductComponent } from './add-product/add-product.component';
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { StorageError } from '@angular/fire/storage';
 import { Auth, User as FirebaseUser, onAuthStateChanged } from '@angular/fire/auth';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -46,7 +47,8 @@ export class ProductsComponent implements OnInit {
         private dialog: MatDialog,
         private fsService: FirestoreService,
         private storageService: StorageService,
-        private afAuth: Auth
+        private afAuth: Auth,
+        private router: Router
 
     ) { }
 
@@ -124,7 +126,9 @@ export class ProductsComponent implements OnInit {
     }
 
 
-    onAddProduct() {
+    onAddProduct(categoryId: string) {
+        this.router.navigate(['add-item', { categoryId }])
+        return
         this.store.select(fromRoot.getCategoryId).subscribe((categoryId: string) => {
             const pathToCategory = `categories/${categoryId}`
             this.fsService.getDoc(pathToCategory).subscribe((category: Category) => {
@@ -136,7 +140,7 @@ export class ProductsComponent implements OnInit {
                 })
             })
         })
-        // this.dialog.open(AddProductComponent)
+
     }
     getProducts() {
         const pathToProducts = `categories/${this.categoryId}/products`;

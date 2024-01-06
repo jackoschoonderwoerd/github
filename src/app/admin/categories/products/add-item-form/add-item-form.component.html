@@ -1,0 +1,12 @@
+<div class="page">
+    <div class="title">adding to {{(category$|async)?.name}}</div>
+    <form class="item-form"
+        (ngSubmit)="onSubmit($event)">
+        <button mat-raised-button
+            color="primary"
+            type="submit">submit</button>
+        <app-general></app-general>
+        <app-bass></app-bass>
+        <app-amplifier></app-amplifier>
+    </form>
+</div>

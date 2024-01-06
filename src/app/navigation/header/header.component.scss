@@ -1,63 +1,27 @@
 mat-toolbar {
     display: flex;
-    justify-content: space-between;
-    .menu {
-        // margin-right: 1rem;
-        @media screen and (min-width: 599px) {
-            display: none;
-        }
-    }
+    gap: 1rem;
+    align-items: center;
+    background-color: var(--primary);
     .wide-screen-only {
-        @media screen and (max-width: 600px) {
-            display: none;
-        }
+        // border: 1px solid black;
+        align-items: center;
         display: flex;
-        justify-content: space-between;
-        .toolbar-list-left {
-            // border: 1px solid red;
-            display: flex;
-            gap: 1rem;
-            // align-items: center;
-            // justify-content: center;
-            .toolbar-list-item {
-                // border: 2px solid black;
+        gap: 1rem;
+        a {
+            padding: 0 0.5rem;
+            border-radius: 3px;
+            color: var(--black);
+            cursor: pointer;
+            // border: 1px solid black;
+            mat-icon {
                 display: flex;
-                flex-direction: column;
                 align-items: center;
-                justify-content: center;
-                a {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-                    // border: 2px solid aqua;
-                    mat-icon {
-                        // border: 2px solid pink;
-                        // color: blue;
-                    }
-                }
             }
         }
-        .toolbar-list-center {
-            display: flex;
-            gap: 1rem;
-            .toolbar-list-item {
-                span {
-                    cursor: pointer;
-                }
-            }
-        }
-        .toolbar-list-right {
-            display: flex;
-            gap: 1rem;
-            .toolbar-list-item {
-                span {
-                    cursor: pointer;
-                }
-            }
+        .link-active {
+            background-color: var(--black);
+            color: var(--primary);
         }
     }
-}
-.link-active {
-    background-color: aquamarine;
 }

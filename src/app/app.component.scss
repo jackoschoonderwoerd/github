@@ -1,8 +1,58 @@
-mat-sidenav-container,
-mat-sidenav-content,
-mat-sidenav {
+mat-sidenav-container {
     height: 100%;
+    mat-sidenav {
+        width: 80%;
+        min-width: 21em;
+        max-width: 30rem;
+        background-color: var(--ochre);
+    }
+    mat-sidenav-content {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        grid-template-areas:
+            "header"
+            "main"
+            "footer";
+        height: 100%;
+        // background-color: black;
+        app-header {
+            grid-area: header;
+        }
+        main {
+            overflow: auto;
+            grid-area: main;
+        }
+        app-footer {
+            grid-area: footer;
+            // background-color: black;
+            background-color: #cb9d06;
+            color: black;
+        }
+    }
 }
-mat-sidenav {
-    width: 80vw;
-}
+
+// mat-sidenav-container {
+//     height: 100%;
+//     mat-sidenav {
+//         width: 80%;
+//         min-width: 21em;
+//         max-width: 30rem;
+//     }
+//     mat-sidenav-content {
+//         display: grid;
+//         grid-template-rows: auto 1fr auto;
+//         grid-template-areas:
+//             "header"
+//             "main"
+//             "footer";
+//         app-header {
+//             grid-area: header;
+//         }
+//         main {
+//             grid-area: main;
+//         }
+//         app-footer {
+//             grid-area: footer;
+//         }
+//     }
+// }

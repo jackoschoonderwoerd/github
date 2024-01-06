@@ -7,18 +7,22 @@
 export interface Product {
     // general
     id?: string;
+    hidden?: boolean;
     name: string;
     description?: string;
     imageUrl?: string;
     imageUrls?: string[];
     price?: number;
     // bass
+    size?: string;
+    model?: string;
     scale?: string;
     typeOfWood?: string;
     origin?: string;
-    yearBuilt?: number;
     backboard?: string;
     color?: string;
+
+    yearBuilt?: number;
     bridge?: number;
     mensuur?: number;
     stringLength?: number;
