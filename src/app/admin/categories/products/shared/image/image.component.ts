@@ -21,16 +21,16 @@ export class ImageComponent implements OnInit {
     file: File;
 
     constructor(
-        private store: Store<fromRoot.State>,
+        private store: Store<fromRoot.SuringarState>,
         private storageService: StorageService,
         private fsService: FirestoreService
 
     ) { }
 
     ngOnInit(): void {
-        this.store.select(fromRoot.getProductId).subscribe((productId: string) => {
+        this.store.select(fromRoot.getAdminProductId).subscribe((productId: string) => {
             if (productId) {
-                this.store.select(fromRoot.getCategoryId).subscribe((categoryId: string) => {
+                this.store.select(fromRoot.getAdminCategoryId).subscribe((categoryId: string) => {
                     this.storeFile(categoryId, productId)
                 })
             }

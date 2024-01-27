@@ -43,7 +43,7 @@ export class CategoriesComponent implements OnInit {
     categories$: Observable<DocumentData>
 
     constructor(
-        private store: Store<fromRoot.State>,
+        private store: Store<fromRoot.SuringarState>,
         private fsService: FirestoreService,
         private dialog: MatDialog,
         private afAuth: Auth,

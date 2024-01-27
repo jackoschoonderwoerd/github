@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatIconModule } from '@angular/material/icon'
@@ -13,7 +13,10 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angul
 import { MatSelectModule } from '@angular/material/select';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 import { MatMenuModule } from '@angular/material/menu'
-
+import { Store } from '@ngrx/store';
+import * as fromRoot from './../../app.reducer'
+import * as VISITOR from './../../visitor/store/visitor.actions';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
     selector: 'app-header',
@@ -24,7 +27,7 @@ import { MatMenuModule } from '@angular/material/menu'
         RouterModule,
         MatIconModule,
         MatButtonModule,
-
+        FlexLayoutModule,
         MatMenuModule
     ],
     templateUrl: './header.component.html',
@@ -39,11 +42,14 @@ export class HeaderComponent implements OnInit {
     @Output() sidenavToggle = new EventEmitter<void>()
 
     constructor(
-        private authService: AuthService,
+        public authService: AuthService,
         private router: Router,
         private afAuth: Auth,
+        private store: Store<fromRoot.SuringarState>,
+        private fsService: FirestoreService,
+        private renderer: Renderer2,
+        private el: ElementRef
 
-        private fsService: FirestoreService
 
     ) { }
 
@@ -58,16 +64,18 @@ export class HeaderComponent implements OnInit {
                 this.user$ = null;
             }
         })
-        const path = `categories`
-        this.categories$ = this.fsService.collection(path);
+        const pathToCategories = `categories`
+        this.categories$ = this.fsService.collection(pathToCategories);
+
+        console.log(window.innerWidth);
+
+
     }
     onCategorySelected(categoryId) {
+        this.store.dispatch(new VISITOR.SetCategoryId(categoryId));
         this.router.navigate(['/visitor/products-visitor', { categoryId }])
 
     }
-
-
-
 
     onToggleSidenav() {
         this.sidenavToggle.emit()
@@ -79,4 +87,13 @@ export class HeaderComponent implements OnInit {
     onLogOut() {
         this.authService.logOut()
     }
+    style() {
+        if (window.innerWidth < 700) {
+            return {
+                'display': 'none'
+            }
+        }
+    }
+
+
 }

@@ -1,26 +1,11 @@
-.images {
-    margin-top: 0.5rem;
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 0.5rem;
-    img {
-        width: 100%;
-    }
-}
-.page {
+.content {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 1rem;
-    .header {
-        font-size: var(--font-size-xxl);
-    }
-    .sub-header {
-        font-size: var(--font-size-xl);
-    }
+    align-items: center;
     ul {
-    }
-    .bottom-content {
-        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
     }
 }

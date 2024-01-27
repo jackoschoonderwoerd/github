@@ -1,12 +1,14 @@
 <div class="page">
-    <div class="category-name">{{(category$|async)?.name}}</div>
-    <div class="products-list">
-        <div class="products-list-item"
-            *ngFor="let product of products$|async">
-            <div class="name"
-                (click)="onProductSelected(product.id)">{{product.name}}</div>
+    <div class="category">
+        <div class="category-name">{{(category$|async)?.name}}</div>
+        <ul class="products-list">
+            <li class="products-list-item"
+                *ngFor="let product of products$|async">
+                <div class="name"
+                    (click)="onProductSelected(product.id)">{{product.name}}</div>
 
-        </div>
+            </li>
+        </ul>
     </div>
 </div>
 

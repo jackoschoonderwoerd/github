@@ -12,6 +12,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ImageBlowupComponent } from 'src/app/admin/categories/products/add-product/images/image-blowup/image-blowup.component';
 // import { IvyCarouselModule } from 'angular-responsive-carousel';
+import * as fromRoot from './../../../app.reducer'
+import { Store } from '@ngrx/store';
+import * as VISITOR from '../../store/visitor.actions'
+
 
 @Component({
     selector: 'app-products-visitor',
@@ -22,7 +26,8 @@ import { ImageBlowupComponent } from 'src/app/admin/categories/products/add-prod
 
         MatIconModule,
         MatButtonModule,
-        MatDialogModule
+        MatDialogModule,
+
     ],
     templateUrl: './products-visitor.component.html',
     styleUrls: ['./products-visitor.component.scss']
@@ -41,28 +46,42 @@ export class ProductsVisitorComponent implements OnInit {
         private route: ActivatedRoute,
         private fsService: FirestoreService,
         private dialog: MatDialog,
-        private router: Router
+        private router: Router,
+        private store: Store<fromRoot.SuringarState>
 
 
     ) { }
 
     ngOnInit(): void {
-        this.route.params.subscribe((params: any) => {
-            console.log(params.categoryId);
-            this.categoryId = params.categoryId;
-            const pathToCategory = `categories/${this.categoryId}`
+
+        this.store.select(fromRoot.getVisitorCategoryId).subscribe((categoryId: string) => {
+            console.log(categoryId);
+            const pathToCategory = `categories/${categoryId}`
             this.category$ = this.fsService.getDoc(pathToCategory)
-            const pathToProducts = `categories/${this.categoryId}/products`
+            const pathToProducts = `categories/${categoryId}/products`
             this.products$ = this.fsService.collection(pathToProducts);
             this.fsService.collection(pathToProducts).subscribe((products: Product[]) => {
+                console.log(products)
                 this.products = products;
             })
-
         })
+        // this.route.params.subscribe((params: any) => {
+        // console.log(params.categoryId);
+        // this.categoryId = params.categoryId;
+        // const pathToCategory = `categories/${this.categoryId}`
+        // this.category$ = this.fsService.getDoc(pathToCategory)
+        // const pathToProducts = `categories/${this.categoryId}/products`
+        // this.products$ = this.fsService.collection(pathToProducts);
+        // this.fsService.collection(pathToProducts).subscribe((products: Product[]) => {
+        //     this.products = products;
+        // })
+        // this.store.dispatch(new VISITOR.SetCategoryId(params.categoryId));
+        // })
 
     }
     onProductSelected(productId: string) {
         console.log(productId)
+        this.store.dispatch(new VISITOR.SetProductId(productId));
         // const pathToProduct = `categories/${this.categoryId}/products/${productId}`;
         // this.product$ = this.fsService.getDoc(pathToProduct);
         // this.fsService.getDoc(pathToProduct).subscribe((product: Product) => {

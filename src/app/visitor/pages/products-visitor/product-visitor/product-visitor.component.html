@@ -1,12 +1,150 @@
-<div class="page">
-    <div class="product">
-        <div class="name">{{(product$|async)?.name}}</div>
-        <!-- <pre>
+<div class="page"
+    fxLayout.xs="column"
+    fxLayout.gt-xs="row"
+    fxLayoutGap="1rem">
+    <div class="product"
+        fxLayout="column"
+        fxLayoutGap="0.5rem">
+        <div *ngIf="(product$|async)?.id"
+            class="product-property id">
+            <div class="">id:</div>
+            <div class="">{{(product$|async)?.id}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.hidden"
+            class="product-property hidden">
+            <div class="">hidden:</div>
+            <div class="">{{(pasync)?.hidden}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.name"
+            class="product-property name">
+            <div class="">name:</div>
+            <div class="">{{(product$|async)?.name}}</div>
+        </div>
 
-            {{(product$|async|json)}}
-        </pre> -->
+        <div *ngIf="(product$|async)?.description"
+            class="product-property description">
+            <div class="">description</div>
+            <div class="property">{{(product$|async)?.description}}</div>
+        </div>
+
+
+        <div *ngIf="(product$|async)?.price"
+            class="product-property price">
+            <div class="">price</div>
+            <div class="">{{(product$|async)?.price|currency:"EUR"}}</div>
+        </div>
+
+
+        <div *ngIf="(product$|async)?.size"
+            class="product-property size">
+            <div class="">size</div>
+            <div class="">{{(product$|async)?.size}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.model"
+            class="product-property model">
+            <div class="">model</div>
+            <div class="">{{(product$|async)?.model}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.scale"
+            class="product-property scale">
+            <div class="">scale</div>
+            <div class="">{{(product$|async)?.scale}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.typeOfWood"
+            class="product-property typeOfWood">
+            <div class="">type of wood</div>
+            <div class="">{{(product$|async)?.typeOfWood}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.origin"
+            class="product-property origin">
+            <div class="">origin</div>
+            <div class="">{{(product$|async)?.origin}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.backboard"
+            class="product-property backboard">
+            <div class="">backboard</div>
+            <div class="">{{(product$|async)?.backboard}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.color"
+            class="product-property color">
+            <div class="">color:</div>
+            <div class="">{{(product$|async)?.color}}</div>
+        </div>
+        <!-- <div class="product-property title">bass</div> -->
+        <div *ngIf="(product$|async)?.yearBuilt"
+            class="product-property yearBuilt">
+            <div class="">year build:</div>
+            <div class="">{{(product$|async)?.yearBuilt}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.bridge"
+            class="product-property bridge">
+            <div class="">bridge:</div>
+            <div class="">{{(product$|async)?.bridge}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.mensuur"
+            class="product-property mensuur">
+            <div class="">mensuur</div>
+            <div class="">{{(product$|async)?.mensuur|cm}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.stringLength"
+            class="product-property stringLength">
+            <div class="">length</div>
+            <div class="">{{(product$|async)?.stringLength|cm}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.top"
+            class="product-property top">
+            <div class="">top</div>
+            <div class="">{{(product$|async)?.top|cm}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.middle"
+            class="product-property middle">
+            <div class="">middle</div>
+            <div class="">{{(product$|async)?.middle|cm}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.bottom"
+            class="product-property bottom">
+            <div class="">bottom</div>
+            <div class="">{{(product$|async)?.bottom|cm}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.depth"
+            class="product-property depth">
+            <div class="">depth</div>
+            <div class="">{{(product$|async)?.depth|cm}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.lengthBackplate"
+            class="product-property lengthBackplate">
+            <div class="">length backplate</div>
+            <div class="">{{(product$|async)?.lengthBackplate|cm}}</div>
+        </div>
+        <!-- <div class="product-property title">amp</div> -->
+        <div *ngIf="(product$|async)?.type"
+            class="product-property type">
+            <div class="">type</div>
+            <div class="">{{(product$|async)?.type}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.output"
+            class="product-property output">
+            <div class="">output</div>
+            <div class="">{{(product$|async)?.output}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.weight"
+            class="product-property weight">
+            <div class="weight"></div>
+            <div class="">{{(product$|async)?.weight}}</div>
+        </div>
+        <div *ngIf="(product$|async)?.material"
+            class="material">
+            <div class="material"></div>
+            <div class="">{{(product$|async)?.material}}</div>
+        </div>
     </div>
+
     <div class="slider-container">
-        <app-image-slider></app-image-slider>
+        <app-image-slider [imgUrls]="imgUrls"></app-image-slider>
     </div>
 </div>
+<!--
+<pre>
+
+    {{(product$|async|json)}}
+</pre> -->

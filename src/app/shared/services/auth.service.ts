@@ -1,5 +1,5 @@
 
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 
 import {
     Auth,
@@ -29,6 +29,8 @@ import { FirebaseError } from '@angular/fire/app';
 })
 export class AuthService {
 
+    isLoggedIn = new EventEmitter<boolean>;
+
     constructor(
         private afAuth: Auth,
         private router: Router
@@ -43,5 +45,6 @@ export class AuthService {
     }
     logOut() {
         signOut(this.afAuth);
+        this.isLoggedIn.emit(false)
     }
 }

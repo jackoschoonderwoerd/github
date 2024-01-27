@@ -1,1 +1,33 @@
-<p>contact works!</p>
+<form [formGroup]="contactForm"
+    (ngSubmit)="onSubmit()">
+    <mat-form-field>
+        <mat-label>name</mat-label>
+        <input type="text"
+            formControlName="name"
+            matInput>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>email</mat-label>
+        <input type="email"
+            formControlName="email"
+            matInput>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>phone</mat-label>
+        <input type="text"
+            formControlName="phone"
+            matInput>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>message</mat-label>
+        <textarea formControlName="message"
+            matInput
+            id=""
+            cols="30"
+            rows="10"></textarea>
+    </mat-form-field>
+    <button type="submit"
+        mat-raised-button
+        [disabled]="contactForm.invalid">submit</button>
+</form>
+<button mat-raised-button><a href="mailto:jackoboes@gmail.com">send email</a></button>

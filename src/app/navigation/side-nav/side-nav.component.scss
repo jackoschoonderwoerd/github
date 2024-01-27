@@ -1,12 +1,29 @@
-.app-side-nav {
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    .close-button-container {
+.background {
+    height: 100%;
+    width: 100%;
+
+    .app-side-nav {
+        // height: 100%;
+        // width: 100%;
+        // background-color: red;
+        // opacity: 0;
+        padding: 1rem;
         display: flex;
-        justify-content: end;
-        .close {
-            border: 1px solid gray;
+        flex-direction: column;
+        mat-nav-list {
+            // mat-expansion-panel{
+            //     mat-nav-list
+            // }
+            .mat-list-item {
+                cursor: pointer;
+            }
+        }
+        .close-button-container {
+            display: flex;
+            justify-content: end;
+            .close {
+                border: 1px solid gray;
+            }
         }
     }
 }

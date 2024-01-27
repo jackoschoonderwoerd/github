@@ -43,7 +43,7 @@ export class ProductsComponent implements OnInit {
     isLoggedIn: boolean = false
 
     constructor(
-        private store: Store<fromRoot.State>,
+        private store: Store<fromRoot.SuringarState>,
         private dialog: MatDialog,
         private fsService: FirestoreService,
         private storageService: StorageService,
@@ -64,7 +64,7 @@ export class ProductsComponent implements OnInit {
         })
 
 
-        this.store.select(fromRoot.getCategoryId).subscribe((categoryId: any) => {
+        this.store.select(fromRoot.getAdminCategoryId).subscribe((categoryId: any) => {
             if (categoryId) {
                 // this.categoryId = categoryId
                 if (categoryId) {
@@ -129,7 +129,7 @@ export class ProductsComponent implements OnInit {
     onAddProduct(categoryId: string) {
         this.router.navigate(['add-item', { categoryId }])
         return
-        this.store.select(fromRoot.getCategoryId).subscribe((categoryId: string) => {
+        this.store.select(fromRoot.getAdminCategoryId).subscribe((categoryId: string) => {
             const pathToCategory = `categories/${categoryId}`
             this.fsService.getDoc(pathToCategory).subscribe((category: Category) => {
 

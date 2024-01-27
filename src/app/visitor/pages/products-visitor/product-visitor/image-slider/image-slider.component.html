@@ -1,19 +1,55 @@
-<div class="buttons-container">
-    <div class="buttons">
-        <button class="previous"
-            (click)="onPrevious()">previous</button>
-        <button class="next"
-            (click)="onNext()">next</button>
+<div class="wrapper"
+    [style]="getStyles()">
+    <div *ngIf="imgUrls.length > 0">
+        <div class="desktop"
+            *ngIf="isDesktop">
+            <!-- <div class="buttons">
+                <button mat-icon-button
+                    class="previous"
+                    (click)="onPrevious()">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+                <button mat-icon-button
+                    class="next"
+                    (click)="onNext()">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+            </div> -->
+
+            <!-- <div> -->
+            <div class="desktop-images"
+                *ngFor="let url of imgUrls; let i = index">
+
+                <lib-ngx-image-zoom [thumbImage]="url"
+                    [ngClass]="selectedIndex === i ? 'selected':'unselected'"
+                    [fullImage]="url"
+                    [magnification]="1.5"
+                    [enableScrollZoom]="true"
+                    [enableLens]="true"
+                    [lensWidth]="300"
+                    [lensHeight]="300"
+                    [circularLens]="true">
+                </lib-ngx-image-zoom>
+
+            </div>
+            <!-- </div> -->
+
+            <!-- <div class="mobile"
+            *ngIf="isTablet || isMobile"
+            (touchstart)="swipe($event, 'start')"
+            (touchend)="swipe($event, 'end')">
+            <div class="mobile-images-container">
+
+                <div class="mobile-images"
+                    *ngFor="let url of imgUrls; let i = index">
+                    <img [ngClass]="selectedIndex === i ? 'mobile-selected':'mobile-unselected'"
+                        [src]="imgUrls[selectedIndex]"
+                        alt="">
+                </div>
+            </div>
+
+        </div> -->
+
+        </div>
     </div>
-</div>
-<div *ngIf="imageUrls.length > 0"
-    class="images-container">
-    <div class="images"
-        *ngFor="let url of imageUrls; let i = index">
-        <img [ngClass]="selectedIndex === i ? 'selected':'unselected'"
-            [src]="url"
-            alt=""
-            (click)="showLargeImage(i)">
-    </div>
-    {{selectedIndex}}
 </div>

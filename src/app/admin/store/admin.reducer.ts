@@ -1,4 +1,5 @@
 
+import { SuringarState } from "src/app/app.reducer";
 import { CATEGORY_ID, IMAGE_URL, PRODUCT_ID } from "./admin.actions"
 
 export interface AdminState {
@@ -13,9 +14,9 @@ let initialState: AdminState = {
     imageUrl: null
 }
 
-// export function setAdminStateFromLs(adminStateFromLS: AdminState) {
-//     initialState = adminStateFromLS;
-// }
+export function setAdminStateFromLs(adminStateFromLS: AdminState) {
+    initialState = adminStateFromLS;
+}
 
 
 
@@ -32,6 +33,12 @@ export function adminReducer(state = initialState, action: any) {
     //         this.router.navigateByUrl('auth/login')
     //     }
     // }
+    if (localStorage.getItem('suringarState')) {
+        const suringarState: SuringarState = JSON.parse(localStorage.getItem('suringarState'))
+        if (suringarState.admin) {
+            state = suringarState.admin
+        }
+    }
     switch (action.type) {
         case CATEGORY_ID: {
             return {

@@ -15,7 +15,7 @@ export class StoreComponent implements OnInit {
     storeData: any
 
     constructor(
-        private store: Store<fromRoot.State>
+        private store: Store<fromRoot.SuringarState>
     ) { }
 
     ngOnInit(): void {

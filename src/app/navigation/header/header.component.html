@@ -4,8 +4,10 @@
         (click)="onToggleSidenav()"><a>
             <mat-icon>menu</mat-icon>
         </a></button>
+    <div class="version">V9</div>
 
-    <div class="wide-screen-only">
+    <div fxHide.xs="true"
+        class="wide-screen-only">
         <a routerLink="home"
             routerLinkActive="link-active"
             [routerLinkActiveOptions]="{exact:true}">home
@@ -35,7 +37,8 @@
             routerLinkActive="link-active"
             [routerLinkActiveOptions]="{exact:true}">store
         </a>
-        <a (click)="onLogIn()">
+        <a *ngIf="!(user$|async)"
+            (click)="onLogIn()">
             <!-- login -->
             <mat-icon>login</mat-icon>
         </a>

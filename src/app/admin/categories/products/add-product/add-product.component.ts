@@ -62,7 +62,7 @@ export class AddProductComponent implements OnInit, AfterViewInit {
         @Inject(MAT_DIALOG_DATA) public data: any,
         private dialogRef: MatDialogRef<AddProductComponent>,
         private fb: FormBuilder,
-        private store: Store<fromRoot.State>,
+        private store: Store<fromRoot.SuringarState>,
         private fsService: FirestoreService,
         private storageService: StorageService,
         private dialog: MatDialog

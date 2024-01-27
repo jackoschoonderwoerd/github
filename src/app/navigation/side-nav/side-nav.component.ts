@@ -10,6 +10,14 @@ import { Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { Store } from '@ngrx/store';
+import * as fromRoot from './../../app.reducer'
+import * as VISITOR from './../../visitor/store/visitor.actions';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { CapitalizePipe } from 'src/app/shared/pipes/capitalize.pipe';
+
 
 @Component({
     selector: 'app-side-nav',
@@ -21,7 +29,10 @@ import { MatMenuModule } from '@angular/material/menu';
         MatListModule,
         MatButtonModule,
         RouterModule,
-        MatMenuModule
+        MatMenuModule,
+        MatExpansionModule,
+        CapitalizePipe
+        // MatSidenavModule
     ],
     templateUrl: './side-nav.component.html',
     styleUrls: ['./side-nav.component.scss']
@@ -35,6 +46,7 @@ export class SideNavComponent implements OnInit {
     constructor(
         private fsService: FirestoreService,
         private router: Router,
+        private store: Store
     ) { }
 
     ngOnInit(): void {
@@ -48,7 +60,8 @@ export class SideNavComponent implements OnInit {
 
     onCategorySelected(categoryId: string) {
         this.onCloseSidenav();
-        this.router.navigate(['/visitor/products-visitor', { categoryId }])
+        this.store.dispatch(new VISITOR.SetCategoryId(categoryId))
+        this.router.navigateByUrl('visitor/products-visitor')
     }
 
 }

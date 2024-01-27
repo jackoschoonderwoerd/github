@@ -1,31 +1,42 @@
-<div class="app-side-nav">
+<div class="background">
 
-    <button mat-button
-        [matMenuTriggerFor]="categories">Catalog</button>
-    <mat-menu #categories>
-        <button *ngFor="let category of categories$|async"
-            (click)="onCategorySelected(category.id)"
-            mat-menu-item>{{category.name}}</button>
-    </mat-menu>
-    <mat-nav-list>
-        <mat-list-item routerLink="home"
-            (click)="onCloseSidenav()">
-            <a>home</a>
-        </mat-list-item>
-        <mat-list-item routerLink="atelier"
-            (click)="onCloseSidenav()">
-            <a>atelier</a>
-        </mat-list-item>
-        <mat-list-item routerLink="contact"
-            (click)="onCloseSidenav()">
-            <a>contact</a>
-        </mat-list-item>
-    </mat-nav-list>
-    <div class="close-button-container">
-        <button class="close"
-            mat-icon-button
-            (click)="onCloseSidenav()">
-            <mat-icon>close</mat-icon>
-        </button>
+    <div class="app-side-nav">
+
+
+        <mat-nav-list>
+            <mat-list-item routerLink="home"
+                (click)="onCloseSidenav()">
+                home
+            </mat-list-item>
+
+            <mat-list-item routerLink="atelier"
+                (click)="onCloseSidenav()">
+                atelier
+            </mat-list-item>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    catalog
+                </mat-expansion-panel-header>
+                <mat-nav-list *ngFor="let category of categories$|async"
+                    (click)="onCategorySelected(category.id)">
+                    <div class="mat-list-item">
+                        {{category.name|capitalize}}
+                    </div>
+
+
+                </mat-nav-list>
+            </mat-expansion-panel>
+            <mat-list-item routerLink="contact"
+                (click)="onCloseSidenav()">
+                <a>contact</a>
+            </mat-list-item>
+        </mat-nav-list>
+        <div class="close-button-container">
+            <button class="close"
+                mat-icon-button
+                (click)="onCloseSidenav()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
     </div>
 </div>

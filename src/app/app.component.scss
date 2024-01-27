@@ -4,7 +4,8 @@ mat-sidenav-container {
         width: 80%;
         min-width: 21em;
         max-width: 30rem;
-        background-color: var(--ochre);
+        // background-color: var(--ochre);
+        background-color: white;
     }
     mat-sidenav-content {
         display: grid;
@@ -19,6 +20,7 @@ mat-sidenav-container {
             grid-area: header;
         }
         main {
+            background-color: var(--primary-light);
             overflow: auto;
             grid-area: main;
         }
