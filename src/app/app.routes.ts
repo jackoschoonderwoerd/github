@@ -6,10 +6,13 @@ import { ContactComponent } from './visitor/pages/contact/contact.component';
 
 import { LoginComponent } from './admin/auth/login/login.component';
 import { CategoriesComponent } from './admin/categories/categories.component';
-import { StoreComponent } from './pages/store/store.component';
+
 import { ProductsVisitorComponent } from './visitor/pages/products-visitor/products-visitor.component';
-import { AddItemFormComponent } from './admin/categories/products/add-item-form/add-item-form.component';
+import { ProductDetailsComponent } from './admin/categories/products/product-details/product-details.component';
 import { ProductVisitorComponent } from './visitor/pages/products-visitor/product-visitor/product-visitor.component';
+import { LargeImageComponent } from './visitor/pages/products-visitor/product-visitor/carousel/large-image/large-image.component';
+import { CatalogComponent } from './visitor/pages/catalog/catalog.component';
+import { NgrxComponent } from './shared/ngrx/ngrx.component';
 
 
 
@@ -36,13 +39,19 @@ export const routes: Routes = [
         path: 'product-visitor', component: ProductVisitorComponent
     },
     {
-        path: 'store', component: StoreComponent
+        path: 'catalog', component: CatalogComponent
+    },
+    {
+        path: 'ngrx', component: NgrxComponent
     },
     {
         path: 'visitor/products-visitor', component: ProductsVisitorComponent
     },
     {
-        path: 'add-item', component: AddItemFormComponent
+        path: 'large-image', component: LargeImageComponent
+    },
+    {
+        path: 'product-details', component: ProductDetailsComponent
     },
     {
         path: '', redirectTo: '/home', pathMatch: 'full'

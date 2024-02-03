@@ -44,6 +44,7 @@ export class FirestoreService {
         return setDoc(docRef, document)
     }
     updateDocument(path: string, newValueObject: object) {
+        console.log(newValueObject)
         const docRef = doc(this.firestore, path)
         return updateDoc(docRef, newValueObject)
     }
@@ -68,4 +69,5 @@ export class FirestoreService {
             imageUrls: arrayRemove(imageUrl)
         })
     }
+
 }

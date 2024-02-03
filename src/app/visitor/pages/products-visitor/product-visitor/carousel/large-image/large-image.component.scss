@@ -1,0 +1,16 @@
+.page-container {
+    // position: relative;
+    .close {
+        position: fixed;
+        top: 5rem;
+        left: 1rem;
+        background-color: var(--primary);
+    }
+    .img-container {
+        // overflow: scroll;
+        img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+}

@@ -8,7 +8,7 @@ export interface Product {
     // general
     id?: string;
     hidden?: boolean;
-    name: string;
+    name?: string;
     description?: string;
     imageUrl?: string;
     imageUrls?: string[];
@@ -30,7 +30,7 @@ export interface Product {
     middle?: number;
     bottom?: number;
     depth?: number;
-    lengthBackplate?: number;
+    lengthBackPlate?: number;
     // amp
     type?: string;
     output?: number;

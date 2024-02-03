@@ -2,34 +2,56 @@ mat-toolbar {
     display: flex;
     gap: 1rem;
     align-items: center;
+    justify-content: space-between;
     background-color: var(--primary);
     .menu {
-        @media only screen and (min-width: 700px) and (-webkit-min-device-pixel-ratio: 2) {
+        // @media only screen and (min-width: 700px) and (-webkit-min-device-pixel-ratio: 2) {
+        //     display: none;
+        @media only screen and (min-width: 700px) {
             display: none;
         }
     }
+    // mat-icon {
+    //     color: red;
+    // }
     .wide-screen-only {
-        @media screen and (width <= 700px) {
-            display: none;
-        }
-        // border: 1px solid black;
-        align-items: center;
         display: flex;
         gap: 1rem;
+        @media screen and (-webkit-min-device-pixel-ratio: 1) {
+            @media screen and (min-width: 0px) and (max-width: 700px) {
+                display: none;
+            }
+        }
+        @media screen and (-webkit-min-device-pixel-ratio: 2) {
+            @media screen and (min-width: 0px) and (max-width: 700px) {
+                display: none;
+            }
+        }
+        @media screen and (-webkit-min-device-pixel-ratio: 3) {
+            @media screen and (min-width: 0px) and (max-width: 700px) {
+                display: none;
+            }
+        }
+
         a {
             padding: 0 0.5rem;
             border-radius: 3px;
             color: var(--black);
             cursor: pointer;
-            // border: 1px solid black;
+            // border: 1px solid blue;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            // align-items: center;
             mat-icon {
-                display: flex;
-                align-items: center;
+                // border: 1px solid red;
+                // display: flex;
+                // align-items: center;
             }
         }
         .link-active {
-            background-color: var(--black);
-            color: var(--primary);
+            background-color: var(--primary-light);
+            // color: var(--primary);
         }
     }
 }

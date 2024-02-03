@@ -6,29 +6,20 @@
         <mat-nav-list>
             <mat-list-item routerLink="home"
                 (click)="onCloseSidenav()">
-                home
+                Home
             </mat-list-item>
 
             <mat-list-item routerLink="atelier"
                 (click)="onCloseSidenav()">
-                atelier
+                Atelier
             </mat-list-item>
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    catalog
-                </mat-expansion-panel-header>
-                <mat-nav-list *ngFor="let category of categories$|async"
-                    (click)="onCategorySelected(category.id)">
-                    <div class="mat-list-item">
-                        {{category.name|capitalize}}
-                    </div>
-
-
-                </mat-nav-list>
-            </mat-expansion-panel>
+            <mat-list-item routerLink="catalog"
+                (click)="onCloseSidenav()">
+                Catalog
+            </mat-list-item>
             <mat-list-item routerLink="contact"
                 (click)="onCloseSidenav()">
-                <a>contact</a>
+                Contact
             </mat-list-item>
         </mat-nav-list>
         <div class="close-button-container">

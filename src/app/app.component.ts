@@ -8,12 +8,14 @@ import { SideNavComponent } from './navigation/side-nav/side-nav.component';
 import { FooterComponent } from './navigation/footer/footer.component';
 import { UiService } from './shared/services/ui.service';
 import * as fromRoot from './app.reducer'
-import { SuringarState } from './app.reducer';
-import { adminReducer, setAdminStateFromLs } from './admin/store/admin.reducer';
-import { visitorReducer } from './visitor/store/visitor.reducer';
+
+import { adminReducer } from './admin/admin-store/admin.reducer';
+import { visitorReducer } from './visitor/visitor-store/visitor.reducer';
 import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { User as FirebaseUser } from "@angular/fire/auth";
 import { AuthService } from './shared/services/auth.service';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import * as UI from './shared/ui-store/ui.actions'
 
 
 @Component({
@@ -25,21 +27,24 @@ import { AuthService } from './shared/services/auth.service';
         HeaderComponent,
         MatSidenavModule,
         SideNavComponent,
-        FooterComponent
+        FooterComponent,
+
+
     ],
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, AfterViewInit {
     openSidenav: boolean = false;
-    title = 'github';
+    title = 'Suringar';
     showHeaderFooter: boolean = true
 
     constructor(
         private uiService: UiService,
         private store: Store<fromRoot.SuringarState>,
         private afAuth: Auth,
-        private authService: AuthService
+        private authService: AuthService,
+        private deviceDetector: DeviceDetectorService
     ) {
 
     }
@@ -56,7 +61,9 @@ export class AppComponent implements OnInit, AfterViewInit {
         if (localStorage.getItem('suringarState')) {
             visitorReducer({
                 categoryId: '',
-                productId: ''
+                productId: '',
+                imageUrl: '',
+                indexCurrentSlide: 0
             }, '')
             adminReducer({
                 categoryId: '',
@@ -65,6 +72,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
             }, '')
         }
+        this.getDevice()
     }
 
 
@@ -77,5 +85,10 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
     storeStateInLs(state: fromRoot.SuringarState) {
         localStorage.setItem('suringarState', JSON.stringify(state))
+    }
+    getDevice() {
+        const deviceInfo = this.deviceDetector.getDeviceInfo()
+        console.log(deviceInfo.deviceType)
+        this.store.dispatch(new UI.SetDeviceType(deviceInfo.deviceType))
     }
 }

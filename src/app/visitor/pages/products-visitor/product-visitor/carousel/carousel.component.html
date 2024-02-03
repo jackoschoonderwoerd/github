@@ -1,0 +1,52 @@
+<!-- <div class="carousel-container">
+    <ngx-slick-carousel class="carousel"
+        #slickModal="slick-carousel"
+        (breakpoint)="breakpoint($event)"
+        (afterChange)="afterChange($event)"
+        (beforeChange)="beforeChange($event)"
+        [config]="slideConfig">
+        <div ngxSlickItem
+            *ngFor="let imgUrl of imgUrls; let index = i"
+            class="slide">
+            <lib-ngx-image-zoom [thumbImage]="imgUrl"
+                [fullImage]="imgUrl"
+                [magnification]="1.3"
+                [enableScrollZoom]="true"
+                [enableLens]="true"
+                [lensWidth]="300"
+                [lensHeight]="300"
+                [circularLens]="true">
+            </lib-ngx-image-zoom>
+            <div class="button-container">
+                <button mat-raised-button
+                    (click)="onLargeImage(imgUrl)">
+                    <mat-icon>photo_size_select_large</mat-icon>
+                </button>
+            </div>
+        </div>
+    </ngx-slick-carousel>
+</div> -->
+
+
+<div class="carousel-container">
+    <ngx-slick-carousel class="carousel"
+        #slickModal="slick-carousel"
+        (breakpoint)="breakpoint($event)"
+        (afterChange)="afterChange($event)"
+        (beforeChange)="beforeChange($event)"
+        [config]="slideConfig">
+        <div ngxSlickItem
+            *ngFor="let imgUrl of imgUrls; let index = i"
+            class="slide">
+            <img [src]="imgUrl"
+                alt=""
+                class="img-style">
+            <div class="button-container">
+                <button mat-raised-button
+                    (click)="onLargeImage(imgUrl)">
+                    <mat-icon>photo_size_select_large</mat-icon>
+                </button>
+            </div>
+        </div>
+    </ngx-slick-carousel>
+</div>

@@ -1,14 +1,19 @@
 <div class="nested-component products-component">
+    <div class="loading content"
+        *ngIf="isLoading">
+        <mat-spinner></mat-spinner>
+        <div class="title">loading products</div>
+    </div>
     <div class="title">{{title}}</div>
     <div *ngIf="(category$|async)?.name"
-        class="category-name">{{(category$|async)?.name}}</div>
+        class="category-name title">{{(category$|async)?.name}}</div>
     <div *ngIf="!(category$|async)?.name"
-        class="category-name">select category</div>
+        class="category-name title">select category</div>
 
-    <div class="select-category"
+    <div class="select-category title"
         *ngIf="!(products$|async)?.length">no products yet</div>
     <ul class="products-list">
-        <li class="products-list-item"
+        <div class="products-list-item"
             *ngFor="let product of products$|async">
             <div class="left">
                 <button color="primary"
@@ -27,13 +32,12 @@
             <div class="right">
                 <img [src]="product.imageUrl"
                     alt="">
-                <button mat-mini-fab
-                    color="primary"
-                    (click)="onProductDetails(product.id)">
-                    <mat-icon fontIcon="search"></mat-icon>
-                </button>
             </div>
-        </li>
+            <div class="hidden"
+                *ngIf="product.hidden">
+                <mat-icon>visibility_off</mat-icon>
+            </div>
+        </div>
     </ul>
     <button *ngIf="category"
         mat-raised-button

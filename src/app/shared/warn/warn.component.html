@@ -1,1 +1,13 @@
-<p>warn works!</p>
+<div class="dialog-page">
+    <div class="message">
+        {{data.message}}
+    </div>
+    <div class="button-container">
+        <button mat-icon-button
+            (click)="onClose()"
+            color="primary"
+            click="onClose()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+</div>

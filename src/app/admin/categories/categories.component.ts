@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { MatButtonModule } from '@angular/material/button';
-import * as ADMIN from '../store/admin.actions';
+import * as ADMIN from '../admin-store/admin.actions';
 import * as fromRoot from '../../app.reducer';
 import { Store } from '@ngrx/store'
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 import { DocumentData, DocumentReference } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AddCategoryComponent } from './add-category/add-category.component';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,6 +16,8 @@ import { ConfirmComponent } from 'src/app/shared/confirm/confirm.component';
 import { ProductsComponent } from './products/products.component';
 import { Auth, onAuthStateChanged, User as FirebaseUser } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { CapitalizePipe } from 'src/app/shared/pipes/capitalize.pipe';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 
 
@@ -27,7 +29,9 @@ import { Router } from '@angular/router';
         ProductsComponent,
         MatButtonModule,
         MatDialogModule,
-        MatIconModule
+        MatIconModule,
+        CapitalizePipe,
+        MatProgressSpinnerModule
     ],
     templateUrl: './categories.component.html',
     styleUrls: ['./categories.component.scss']
@@ -39,6 +43,7 @@ export class CategoriesComponent implements OnInit {
     categories: string[] = ['amplifiers', 'german basses'];
     title: string = 'CategoriesComponent';
     isLoggedIn: boolean = false;
+    isLoading: boolean = true;
 
     categories$: Observable<DocumentData>
 
@@ -55,16 +60,15 @@ export class CategoriesComponent implements OnInit {
         onAuthStateChanged(this.afAuth, (user: FirebaseUser) => {
             if (user) {
                 this.isLoggedIn = true;
-                // this.user$ = new Observable<FirebaseUser>((subcriber: any) => {
-                //     subcriber.next(user)
-                // })
             } else {
                 this.isLoggedIn = false;
             }
         })
 
         const path = `categories`
-        this.categories$ = this.fsService.collection(path);
+        this.categories$ = this.fsService.collection(path).pipe(tap(() => {
+            this.isLoading = false;
+        }))
     }
 
     onCategorySelected(categoryId: string) {

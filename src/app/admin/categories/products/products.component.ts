@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog'
 
-import { Observable, take } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { DocumentData } from '@angular/fire/firestore';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 import { Category } from 'src/app/shared/models/category.model';
@@ -13,15 +13,16 @@ import { Product } from 'src/app/shared/models/product.model';
 import { MatIconModule } from '@angular/material/icon';
 import { ConfirmComponent } from 'src/app/shared/confirm/confirm.component';
 import { FirebaseError } from '@angular/fire/app';
-import * as ADMIN from 'src/app/admin/store/admin.actions'
+import * as ADMIN from 'src/app/admin/admin-store/admin.actions'
 
 
-import { ProductDetailsComponent } from './product-details/product-details.component';
-import { AddProductComponent } from './add-product/add-product.component';
+
+
 import { StorageService } from 'src/app/shared/services/storage.service';
 import { StorageError } from '@angular/fire/storage';
 import { Auth, User as FirebaseUser, onAuthStateChanged } from '@angular/fire/auth';
 import { Router } from '@angular/router';
+import { WarnComponent } from 'src/app/shared/warn/warn.component';
 
 
 @Component({
@@ -40,7 +41,8 @@ export class ProductsComponent implements OnInit {
     products$: Observable<DocumentData>
     user: FirebaseUser;
     user$: Observable<FirebaseUser>
-    isLoggedIn: boolean = false
+    isLoggedIn: boolean = false;
+    isLoading: boolean = false;
 
     constructor(
         private store: Store<fromRoot.SuringarState>,
@@ -53,7 +55,7 @@ export class ProductsComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-
+        this.isLoading = true;
         onAuthStateChanged(this.afAuth, (user: FirebaseUser) => {
             if (user) {
                 this.isLoggedIn = true;
@@ -76,7 +78,9 @@ export class ProductsComponent implements OnInit {
                     this.category$ = this.fsService.getDoc(pathToCategory)
                     this.getProducts()
                     const pathToProducts = `categories/${categoryId}/products`
-                    this.products$ = this.fsService.collection(pathToProducts)
+                    this.products$ = this.fsService.collection(pathToProducts).pipe(tap(() => {
+                        this.isLoading = false
+                    }))
                     // this.fsService.collection(pathToProducts).subscribe((products: Product[]) => {
                     //     console.log(products)
                     // })
@@ -87,71 +91,78 @@ export class ProductsComponent implements OnInit {
 
     onEdit(product) {
         // this.store.dispatch(new ADMIN.SetProductId(productId))
-        this.dialog.open(AddProductComponent, {
-            data: {
-                product,
-                category: this.category
-            }
-        })
+        this.router.navigateByUrl('product-details')
+        this.store.dispatch(new ADMIN.SetProductId(product.id))
+        // this.dialog.open(AddProductComponent, {
+        //     data: {
+        //         product,
+        //         category: this.category
+        //     }
+        // })
     }
     onDelete(product: Product) {
 
         const dialogRef = this.dialog.open(ConfirmComponent, {
+
             data: {
                 message: 'This will permanently delete the product and all of it\'s properties'
-            }
+            },
         })
-        dialogRef.afterClosed().subscribe((status: boolean) => {
-            if (status) {
-                if (product.imageUrl) {
-                    const pathToImageFile = `categories/${this.category.id}/products/${product.id}`
-                    this.storageService.deleteObject(pathToImageFile)
-                        .then((res: any) => {
-                            console.log(`image file deleted; ${res}`)
-                        })
-                        .catch((err: StorageError) => {
-                            console.log(`failed to delete image file; ${err.message}`)
-                        })
-                }
-                const pathToProduct = `categories/${this.category.id}/products/${product.id}`
-                this.fsService.deleteDoc(pathToProduct)
-                    .then((res: any) => {
-                        console.log(`product deleted; ${res}`);
+        dialogRef.afterClosed().subscribe((res: boolean) => {
+            this.storedImages(this.categoryId, product.id)
+                .then((storedImagesFound: boolean) => {
+                    this.dialog.open(WarnComponent, {
+                        data: {
+                            message: 'you have to delete the images for this item before you can delete the item'
+                        }
                     })
-                    .catch((err: FirebaseError) => {
-                        console.log(`failed to delete product; ${err.message}`);
-                    });
-            }
+                    console.log(`storedImagesFound: ${storedImagesFound}`)
+                    return;
+                })
+                .catch((storedImagesFound: boolean) => {
+                    console.log(`storedImagesFound: ${storedImagesFound}`)
+                    this.removeItemFromDb(this.categoryId, product.id)
+                })
+                .then((res: any) => {
+                    console.log(`item removed, ${res}`)
+                })
+                .catch((err: FirebaseError) => {
+                    console.log(`failed to remove item, ${err.message}`)
+                })
+
         })
+
+    }
+
+    storedImages(categoryId, productId) {
+        const pathToImageFiles = `categories/${this.categoryId}/products/${productId}/images`;
+        const promise = new Promise((resolve, reject) => {
+            this.storageService.listAll(pathToImageFiles).then((list: any) => {
+                if (list.items.length) {
+                    resolve(true);
+                } else {
+                    reject(false);
+                }
+            })
+
+        })
+        return promise
+    }
+    removeItemFromDb(categoryId, productId) {
+        console.log('removeItemFromDb()')
+        const pathToItemDb = `categories/${categoryId}/products/${productId}`;
+        return this.fsService.deleteDoc(pathToItemDb)
     }
 
 
     onAddProduct(categoryId: string) {
-        this.router.navigate(['add-item', { categoryId }])
+        this.store.dispatch(new ADMIN.SetCategoryId(categoryId))
+        this.router.navigate(['product-details'])
         return
-        this.store.select(fromRoot.getAdminCategoryId).subscribe((categoryId: string) => {
-            const pathToCategory = `categories/${categoryId}`
-            this.fsService.getDoc(pathToCategory).subscribe((category: Category) => {
-
-                this.dialog.open(AddProductComponent, {
-                    data: {
-                        category
-                    }
-                })
-            })
-        })
-
     }
     getProducts() {
         const pathToProducts = `categories/${this.categoryId}/products`;
         this.products$ = this.fsService.collection(pathToProducts);
     }
-    onProductDetails(productId) {
-        this.dialog.open(ProductDetailsComponent, {
-            data: {
-                categoryId: this.categoryId,
-                productId
-            }
-        })
-    }
+
 }

@@ -1,11 +1,23 @@
-<div class="page"
-    fxLayout.xs="column"
-    fxLayout.gt-xs="row"
-    fxLayoutGap="1rem">
+<div class="page">
+    <div class="spinner-container"
+        *ngIf="isLoading">
+        <div class="title">loading product</div>
+        <mat-spinner></mat-spinner>
+    </div>
+    <div class="product-revolver">
+
+        <mat-icon (click)="onPreviousProduct()">keyboard_arrow_left</mat-icon>
+
+        <div class="category-name">{{(category$|async)?.name}}</div>
+
+        <mat-icon (click)="onNextProduct()">keyboard_arrow_right</mat-icon>
+
+    </div>
     <div class="product"
+        *ngIf="product$|async"
         fxLayout="column"
         fxLayoutGap="0.5rem">
-        <div *ngIf="(product$|async)?.id"
+        <div *ngIf="(product$|async)?.id && isLoggedIn"
             class="product-property id">
             <div class="">id:</div>
             <div class="">{{(product$|async)?.id}}</div>
@@ -13,18 +25,18 @@
         <div *ngIf="(product$|async)?.hidden"
             class="product-property hidden">
             <div class="">hidden:</div>
-            <div class="">{{(pasync)?.hidden}}</div>
+            <div class="">{{(product$|async)?.hidden}}</div>
         </div>
         <div *ngIf="(product$|async)?.name"
             class="product-property name">
-            <div class="">name:</div>
+            <!-- <div class="">name:</div> -->
             <div class="">{{(product$|async)?.name}}</div>
         </div>
 
         <div *ngIf="(product$|async)?.description"
             class="product-property description">
-            <div class="">description</div>
-            <div class="property">{{(product$|async)?.description}}</div>
+            <!-- <div class="">description</div> -->
+            <div class="">{{(product$|async)?.description}}</div>
         </div>
 
 
@@ -111,10 +123,10 @@
             <div class="">depth</div>
             <div class="">{{(product$|async)?.depth|cm}}</div>
         </div>
-        <div *ngIf="(product$|async)?.lengthBackplate"
-            class="product-property lengthBackplate">
+        <div *ngIf="(product$|async)?.lengthBackPlate"
+            class="product-property lengthBackPlate">
             <div class="">length backplate</div>
-            <div class="">{{(product$|async)?.lengthBackplate|cm}}</div>
+            <div class="">{{(product$|async)?.lengthBackPlate|cm}}</div>
         </div>
         <!-- <div class="product-property title">amp</div> -->
         <div *ngIf="(product$|async)?.type"
@@ -138,10 +150,14 @@
             <div class="">{{(product$|async)?.material}}</div>
         </div>
     </div>
-
-    <div class="slider-container">
-        <app-image-slider [imgUrls]="imgUrls"></app-image-slider>
+    <div *ngIf="product$|async"
+        class="carousel-container">
+        <app-carousel [imgUrls]="imgUrls"></app-carousel>
     </div>
+    <!-- <div class="slider-container">
+        <app-image-slider [imgUrls]="imgUrls"></app-image-slider>
+    </div> -->
+
 </div>
 <!--
 <pre>

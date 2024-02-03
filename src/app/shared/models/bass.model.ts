@@ -13,7 +13,7 @@ export interface Bass {
     middle: number;
     bottom: number;
     depth: number;
-    lengthBackplate: number;
+    lengthBackPlate: number;
 
     imageUrl: string;
     description: string;

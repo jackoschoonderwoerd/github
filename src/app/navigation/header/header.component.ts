@@ -9,13 +9,13 @@ import { Observable } from 'rxjs';
 
 import { User as FirebaseUser } from "@angular/fire/auth";
 import { MatButtonModule } from '@angular/material/button';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { MatSelectModule } from '@angular/material/select';
+import { FormGroup } from '@angular/forms';
+
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 import { MatMenuModule } from '@angular/material/menu'
 import { Store } from '@ngrx/store';
 import * as fromRoot from './../../app.reducer'
-import * as VISITOR from './../../visitor/store/visitor.actions';
+import * as VISITOR from '../../visitor/visitor-store/visitor.actions';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @Component({
@@ -47,8 +47,7 @@ export class HeaderComponent implements OnInit {
         private afAuth: Auth,
         private store: Store<fromRoot.SuringarState>,
         private fsService: FirestoreService,
-        private renderer: Renderer2,
-        private el: ElementRef
+
 
 
     ) { }
@@ -66,11 +65,8 @@ export class HeaderComponent implements OnInit {
         })
         const pathToCategories = `categories`
         this.categories$ = this.fsService.collection(pathToCategories);
-
-        console.log(window.innerWidth);
-
-
     }
+
     onCategorySelected(categoryId) {
         this.store.dispatch(new VISITOR.SetCategoryId(categoryId));
         this.router.navigate(['/visitor/products-visitor', { categoryId }])
@@ -87,13 +83,4 @@ export class HeaderComponent implements OnInit {
     onLogOut() {
         this.authService.logOut()
     }
-    style() {
-        if (window.innerWidth < 700) {
-            return {
-                'display': 'none'
-            }
-        }
-    }
-
-
 }

@@ -14,7 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { Store } from '@ngrx/store';
 import * as fromRoot from './../../app.reducer'
-import * as VISITOR from './../../visitor/store/visitor.actions';
+import * as VISITOR from '../../visitor/visitor-store/visitor.actions';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CapitalizePipe } from 'src/app/shared/pipes/capitalize.pipe';
 

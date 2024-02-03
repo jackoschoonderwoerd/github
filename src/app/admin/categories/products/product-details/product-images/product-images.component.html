@@ -1,0 +1,32 @@
+<div class="images">
+    <div class="img-container"
+        *ngFor="let imageUrl of imageUrls; let i = index">
+        <img [src]="imageUrl"
+            alt="">
+        <div class="buttons">
+            <button mat-icon-button
+                [disabled]="i === 0"
+                [ngStyle]="{'visibility': i === 0 ? 'hidden' : 'visible' }"
+                (click)="onMoveImage('left', i)">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <button mat-icon-button
+                (click)="onDeleteImage(imageUrl, i)">
+                <mat-icon color="warn">delete</mat-icon>
+            </button>
+            <button mat-icon-button
+                [ngStyle]="{'visibility': i == imageUrls.length - 1 ? 'hidden' : 'visible' }"
+                (click)="onMoveImage('right', i)">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
+    </div>
+    <div class="add-image">
+        <input style="display: none;"
+            type="file"
+            #fileInput
+            (change)="onImageInputChange($event)">
+        <button mat-raised-button
+            (click)="fileInput.click()">add image</button>
+    </div>
+</div>

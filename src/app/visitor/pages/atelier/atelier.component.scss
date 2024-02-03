@@ -1,11 +1,26 @@
-.content {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-    ul {
+.page {
+    height: 100%;
+    background-image: url("./../../../../assets/images/opaque-images/lucas-opacity\ 01.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    .content {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 1rem;
+        align-items: center;
+        ul {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .bottom-content {
+            hr {
+                color: var(--primary);
+            }
+        }
+    }
+    .filler {
+        height: 10px;
     }
 }

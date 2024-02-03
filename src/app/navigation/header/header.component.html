@@ -4,38 +4,35 @@
         (click)="onToggleSidenav()"><a>
             <mat-icon>menu</mat-icon>
         </a></button>
-    <div class="version">V9</div>
+    <div class="version">V11</div>
 
-    <div fxHide.xs="true"
-        class="wide-screen-only">
+    <div class="wide-screen-only">
         <a routerLink="home"
             routerLinkActive="link-active"
             [routerLinkActiveOptions]="{exact:true}">home
-        </a>
-        <a routerLink="contact"
-            routerLinkActive="link-active"
-            [routerLinkActiveOptions]="{exact:true}">contact
         </a>
         <a routerLink="atelier"
             routerLinkActive="link-active"
             [routerLinkActiveOptions]="{exact:true}">atelier
         </a>
-        <a [matMenuTriggerFor]="categories">catalog
-            <mat-menu #categories>
-                <button *ngFor="let category of categories$|async"
-                    (click)="onCategorySelected(category.id)"
-                    mat-menu-item>{{category.name}}</button>
-            </mat-menu>
+        <a routerLink="catalog"
+            routerLinkActive="link-active"
+            [routerLinkActiveOptions]="{exact:true}">catalog
         </a>
+        <a routerLink="contact"
+            routerLinkActive="link-active"
+            [routerLinkActiveOptions]="{exact:true}">contact
+        </a>
+
         <a *ngIf="(user$|async)"
             routerLink="products"
             routerLinkActive="link-active"
-            [routerLinkActiveOptions]="{exact:true}">add product
+            [routerLinkActiveOptions]="{exact:true}">products
         </a>
         <a *ngIf="(user$|async)"
-            routerLink="store"
+            routerLink="ngrx"
             routerLinkActive="link-active"
-            [routerLinkActiveOptions]="{exact:true}">store
+            [routerLinkActiveOptions]="{exact:true}">ngrx
         </a>
         <a *ngIf="!(user$|async)"
             (click)="onLogIn()">

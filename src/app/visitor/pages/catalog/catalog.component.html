@@ -1,0 +1,16 @@
+<div class="page">
+    <div class="spinner-container"
+        *ngIf="isLoading">
+        <div class="title">loading categories</div>
+        <mat-spinner></mat-spinner>
+    </div>
+    <div class="catalog">
+        <div *ngIf="!isLoading"
+            class="title">categories</div>
+        <div class="category-name"
+            *ngFor="let category of categories$|async"
+            (click)="onCategory(category.id)">
+            {{category.name|capitalize}}
+        </div>
+    </div>
+</div>

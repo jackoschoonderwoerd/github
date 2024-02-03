@@ -60,178 +60,87 @@
         }
     }
 }
-.header,
-.content {
-    max-width: 1000px;
-    margin: auto;
-}
+.page {
+    background-image: url("./../../../../assets/images/opaque-images/basses-opacity-01.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    .header,
+    .content {
+        max-width: 1000px;
+        margin: auto;
+    }
 
-// .header {
-//     // border: 3px solid red;
-//     text-align: center;
-//     background-color: var(--primary-light);
-//     border: 1px solid var(--primary);
-//     @media screen and (-webkit-min-device-pixel-ratio: 1) {
-//         @media screen and (min-width: 0px) and (max-width: 400px) {
-//             padding: 2rem 1rem;
-//             font-size: var(--font-size-l);
-//             // color: red;
-//         }
-//         @media screen and (min-width: 401px) and (max-width: 700px) {
-//             font-size: var(--font-size-xl);
-//             // color: blue;
-//             padding: 2rem 2rem;
-//         }
-//         @media screen and (min-width: 700px) {
-//             font-size: var(--font-size-xxl);
-//             // color: green;
-//             padding: 2rem 5rem;
-//         }
-//     }
-//     @media screen and (-webkit-min-device-pixel-ratio: 2) {
-//         @media screen and (min-width: 0px) and (max-width: 400px) {
-//             font-size: var(--font-size-l);
-//             // color: pink;
-//             padding: 2rem 1rem;
-//         }
-//         @media screen and (min-width: 401px) and (max-width: 700px) {
-//             font-size: var(--font-size-xl);
-//             // color: lightblue;
-//             padding: 2rem 2rem;
-//         }
-//         @media screen and (min-width: 700px) {
-//             font-size: var(--font-size-xxl);
-//             // color: lightgreen;
-//             padding: 2rem 5rem;
-//         }
-//     }
-//     @media screen and (-webkit-min-device-pixel-ratio: 3) {
-//         @media screen and (min-width: 0px) and (max-width: 400px) {
-//             padding: 2rem 1rem;
-//             font-size: var(--font-size-l);
-//         }
-//         @media screen and (min-width: 401px) and (max-width: 700px) {
-//             font-size: var(--font-size-xl);
-//             padding: 2rem 2rem;
-//         }
-//         @media screen and (min-width: 700px) {
-//             font-size: var(--font-size-xxl);
-//             padding: 2rem 5rem;
-//         }
-//     }
-// }
+    .date {
+        padding: 0 5rem;
+        text-align: end;
+    }
+    .images {
+        display: grid;
+        gap: 1rem;
+        @media screen and (-webkit-min-device-pixel-ratio: 1) {
+            @media screen and (min-width: 0px) and (max-width: 400px) {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "first"
+                    "second"
+                    "third";
+            }
+            @media screen and (min-width: 401px) and (max-width: 700px) {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-areas: "first second third";
+            }
+            @media screen and (min-width: 700px) {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-areas: "first second third";
+            }
+        }
+        @media screen and (-webkit-min-device-pixel-ratio: 2) {
+            @media screen and (min-width: 0px) and (max-width: 400px) {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "first"
+                    "second"
+                    "third";
+            }
+            @media screen and (min-width: 401px) and (max-width: 700px) {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-areas: "first second third";
+            }
+            @media screen and (min-width: 700px) {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-areas: "first second third";
+            }
+        }
+        @media screen and (-webkit-min-device-pixel-ratio: 3) {
+            @media screen and (min-width: 0px) and (max-width: 400px) {
+                grid-template-columns: 1fr;
+                grid-template-areas:
+                    "first"
+                    "second"
+                    "third";
+            }
+            @media screen and (min-width: 401px) and (max-width: 700px) {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-areas: "first second third";
+            }
+            @media screen and (min-width: 700px) {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-areas: "first second third";
+            }
+        }
 
-// .content {
-//     @media screen and (-webkit-min-device-pixel-ratio: 1) {
-//         @media screen and (min-width: 0px) and (max-width: 400px) {
-//             padding: 1rem;
-//         }
-//         @media screen and (min-width: 401px) and (max-width: 700px) {
-//             padding: 1rem 2rem;
-//         }
-//         @media screen and (min-width: 700px) {
-//             padding: 1rem 5rem;
-//         }
-//     }
-//     @media screen and (-webkit-min-device-pixel-ratio: 2) {
-//         @media screen and (min-width: 0px) and (max-width: 400px) {
-//             padding: 1rem;
-//         }
-//         @media screen and (min-width: 401px) and (max-width: 700px) {
-//             padding: 1rem 2rem;
-//         }
-//         @media screen and (min-width: 700px) {
-//             padding: 1rem 5rem;
-//         }
-//     }
-//     @media screen and (-webkit-min-device-pixel-ratio: 3) {
-//         @media screen and (min-width: 0px) and (max-width: 400px) {
-//             padding: 1rem;
-//         }
-//         @media screen and (min-width: 401px) and (max-width: 700px) {
-//             padding: 1rem 2rem;
-//         }
-//         @media screen and (min-width: 700px) {
-//             padding: 1rem 5rem;
-//         }
-//     }
-// }
-
-.date {
-    padding: 0 5rem;
-    text-align: end;
-}
-.images {
-    display: grid;
-    gap: 1rem;
-    @media screen and (-webkit-min-device-pixel-ratio: 1) {
-        @media screen and (min-width: 0px) and (max-width: 400px) {
-            grid-template-columns: 1fr;
-            grid-template-areas:
-                "first"
-                "second"
-                "third";
+        img {
+            width: 100%;
         }
-        @media screen and (min-width: 401px) and (max-width: 700px) {
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-areas: "first second third";
+        .img-1 {
+            grid-area: first;
         }
-        @media screen and (min-width: 700px) {
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-areas: "first second third";
+        .img-2 {
+            grid-area: second;
         }
-    }
-    @media screen and (-webkit-min-device-pixel-ratio: 2) {
-        @media screen and (min-width: 0px) and (max-width: 400px) {
-            grid-template-columns: 1fr;
-            grid-template-areas:
-                "first"
-                "second"
-                "third";
+        .img-3 {
+            grid-area: third;
         }
-        @media screen and (min-width: 401px) and (max-width: 700px) {
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-areas: "first second third";
-        }
-        @media screen and (min-width: 700px) {
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-areas: "first second third";
-        }
-    }
-    @media screen and (-webkit-min-device-pixel-ratio: 3) {
-        @media screen and (min-width: 0px) and (max-width: 400px) {
-            grid-template-columns: 1fr;
-            grid-template-areas:
-                "first"
-                "second"
-                "third";
-        }
-        @media screen and (min-width: 401px) and (max-width: 700px) {
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-areas: "first second third";
-        }
-        @media screen and (min-width: 700px) {
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-areas: "first second third";
-        }
-    }
-    // display: grid;
-    // grid-template-columns: repeat (3, 1fr);
-    // grid-template-areas: "first second third";
-    // gap: 1rem;
-    // @media (width < 400px) {
-    //     grid-template-columns: 1fr;
-    // }
-    img {
-        width: 100%;
-    }
-    .img-1 {
-        grid-area: first;
-    }
-    .img-2 {
-        grid-area: second;
-    }
-    .img-3 {
-        grid-area: third;
     }
 }

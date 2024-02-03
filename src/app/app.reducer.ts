@@ -1,16 +1,19 @@
 import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
-import * as fromAdmin from './admin/store/admin.reducer';
-import * as fromVisitor from './visitor/store/visitor.reducer'
+import * as fromAdmin from './admin/admin-store/admin.reducer';
+import * as fromVisitor from './visitor/visitor-store/visitor.reducer';
+import * as fromUi from './shared/ui-store/ui.reducer'
 
 
 export interface SuringarState {
     admin: fromAdmin.AdminState;
-    visitor: fromVisitor.VisitorState
+    visitor: fromVisitor.VisitorState;
+    ui: fromUi.UiState
 }
 
 export const reducers: ActionReducerMap<SuringarState> = {
     admin: fromAdmin.adminReducer,
-    visitor: fromVisitor.visitorReducer
+    visitor: fromVisitor.visitorReducer,
+    ui: fromUi.uiReducer
 }
 
 // export function setStateFromLs(stateFormLs: SuringarState) {
@@ -30,6 +33,12 @@ export const getImageUrl = createSelector(getAdminState, fromAdmin.getImageUrl);
 export const getVisitorState = createFeatureSelector<fromVisitor.VisitorState>('visitor');
 export const getVisitorCategoryId = createSelector(getVisitorState, fromVisitor.getCategoryId);
 export const getVisitorProductId = createSelector(getVisitorState, fromVisitor.getProductId);
+export const getVisitorImageUrl = createSelector(getVisitorState, fromVisitor.getImageUrl);
+export const getVisitorIndexCurrentSlide = createSelector(getVisitorState, fromVisitor.getIndexCurrentSlide);
+
+export const getUiState = createFeatureSelector<fromUi.UiState>('ui');
+export const getDeviceType = createSelector(getUiState, fromUi.getDeviceType)
+
 
 
 

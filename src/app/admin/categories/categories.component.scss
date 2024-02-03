@@ -1,7 +1,7 @@
 .app-product-categories {
     border: 3px solid red;
     display: grid;
-    grid-template-columns: 1fr 3fr;
+    grid-template-columns: 2fr 3fr;
     gap: 1rem;
     .content {
         display: flex;
@@ -11,15 +11,30 @@
             display: flex;
             flex-direction: column;
             gap: 0.3rem;
-            .edit-delete-buttons {
-                display: flex;
-                gap: 1rem;
-            }
             .categories-list-item {
                 display: flex;
                 gap: 1rem;
                 // border: 1px solid black;
                 align-items: center;
+                background-color: var(--primary);
+                // border: 2px solid var(--primary);
+                padding: 0.3rem 0.5rem;
+                width: 100%;
+                border-radius: 3px;
+                .edit-delete-buttons {
+                    display: flex;
+                    gap: 1rem;
+                }
+                .category-button {
+                    background-color: var(--primary-light);
+                    width: 100%;
+                    padding: 0.3rem 0.5rem;
+                    border-radius: 3px;
+                    cursor: pointer;
+                }
+                .add-category {
+                    width: 100%;
+                }
             }
         }
     }

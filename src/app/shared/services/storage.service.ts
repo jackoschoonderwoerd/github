@@ -48,4 +48,8 @@ export class StorageService {
             return deleteObject(storageRef)
         }
     }
+    listAll(path: string) {
+        const storageRef = ref(this.storage, path)
+        return listAll(storageRef)
+    }
 }

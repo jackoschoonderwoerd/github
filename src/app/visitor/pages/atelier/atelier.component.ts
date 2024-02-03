@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AtelierService } from './atelier.service';
 import { ImageSliderComponent } from '../products-visitor/product-visitor/image-slider/image-slider.component';
+import { AtelierCarouselComponent } from './atelier-carousel/atelier-carousel.component';
 
 
 @Component({
     selector: 'app-atelier',
     standalone: true,
-    imports: [CommonModule, ImageSliderComponent],
+    imports: [CommonModule, ImageSliderComponent, AtelierCarouselComponent],
     templateUrl: './atelier.component.html',
     styleUrls: ['./atelier.component.scss']
 })
