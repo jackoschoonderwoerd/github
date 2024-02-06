@@ -13,6 +13,7 @@ import { ProductVisitorComponent } from './visitor/pages/products-visitor/produc
 import { LargeImageComponent } from './visitor/pages/products-visitor/product-visitor/carousel/large-image/large-image.component';
 import { CatalogComponent } from './visitor/pages/catalog/catalog.component';
 import { NgrxComponent } from './shared/ngrx/ngrx.component';
+import { ImageControlComponent } from './admin/categories/products/product-details/image-control/image-control.component';
 
 
 
@@ -49,6 +50,9 @@ export const routes: Routes = [
     },
     {
         path: 'large-image', component: LargeImageComponent
+    },
+    {
+        path: 'image-control', component: ImageControlComponent
     },
     {
         path: 'product-details', component: ProductDetailsComponent

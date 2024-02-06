@@ -10,6 +10,15 @@
             matInput
             formControlName="name">
     </mat-form-field>
+    <div class="orientation-info">
+        In order for the image carousel to work properly, select the appropriate orientation for the optimal presentation of the product.
+    </div>
+    <mat-form-field>
+        <mat-select formControlName="orientation">
+            <mat-option [value]="orientation"
+                *ngFor="let orientation of orientations">{{orientation}}</mat-option>
+        </mat-select>
+    </mat-form-field>
     <button mat-raised-button
         color="primary"
         (click)="onAddCategory()"

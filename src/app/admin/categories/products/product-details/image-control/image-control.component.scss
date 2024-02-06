@@ -1,0 +1,10 @@
+.image-control-component {
+    // margin-top: 3rem;
+    padding: 1rem;
+    border: 3px solid var(--primary);
+    width: 18rem;
+    margin: 3rem auto;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}

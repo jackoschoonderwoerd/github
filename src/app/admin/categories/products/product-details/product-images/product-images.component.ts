@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import * as fromRoot from '../../../../../app.reducer';
@@ -15,11 +15,12 @@ import { take } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmComponent } from 'src/app/shared/confirm/confirm.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-item-images',
     standalone: true,
-    imports: [CommonModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule],
+    imports: [CommonModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, RouterModule],
     templateUrl: './product-images.component.html',
     styleUrl: './product-images.component.scss'
 })
@@ -34,7 +35,8 @@ export class ProductImagesComponent implements OnInit {
         private store: Store<fromRoot.SuringarState>,
         private storageService: StorageService,
         private fsService: FirestoreService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private router: Router
     ) {
 
     }
@@ -113,28 +115,28 @@ export class ProductImagesComponent implements OnInit {
     }
 
     onImageInputChange(e) {
-        this.storingImage = true
-        const imageFile = e.target.files[0]
-        this.addImageToStorage(imageFile)
-            .then((downloadUrl: string) => {
-                console.log(downloadUrl)
-                return downloadUrl
-            })
-            .catch((err: FirestoreError) => {
-                console.log(`failed to store image file, ${err.message}`)
-            })
-            .then((downloadUrl: string) => {
-                return this.addUrlToProductImagesArray(downloadUrl)
-            })
-            .then((res: any) => {
-                console.log('imageUrlsArray updated')
-            })
-            .catch((err: FirebaseError) => {
-                console.log(`failed to update imageUrlsArray, ${err.message}`)
-            })
-            .then(() => {
-                this.storingImage = false;
-            })
+        // this.storingImage = true
+        // const imageFile = e.target.files[0]
+        // this.addImageToStorage(imageFile)
+        //     .then((downloadUrl: string) => {
+        //         console.log(downloadUrl)
+        //         return downloadUrl
+        //     })
+        //     .catch((err: FirestoreError) => {
+        //         console.log(`failed to store image file, ${err.message}`)
+        //     })
+        //     .then((downloadUrl: string) => {
+        //         return this.addUrlToProductImagesArray(downloadUrl)
+        //     })
+        //     .then((res: any) => {
+        //         console.log('imageUrlsArray updated')
+        //     })
+        //     .catch((err: FirebaseError) => {
+        //         console.log(`failed to update imageUrlsArray, ${err.message}`)
+        //     })
+        //     .then(() => {
+        //         this.storingImage = false;
+        //     })
     }
     private addImageToStorage(imageFile: File) {
         const pathToImageStorage = `categories/${this.categoryId}/products/${this.productId}/images/${imageFile.name}`
@@ -143,7 +145,7 @@ export class ProductImagesComponent implements OnInit {
     private addUrlToProductImagesArray(downloadUrl: string) {
         const pathToProductImageUrlsArray = `categories/${this.categoryId}/products/${this.productId}`
         console.log(downloadUrl);
-        return this.fsService.addElementToArray(pathToProductImageUrlsArray, downloadUrl)
+        return this.fsService.addElementToImageUrlsArray(pathToProductImageUrlsArray, downloadUrl)
     }
     private deleteImageFromStorage(imageUrl) {
         const filename = this.getFilenameFromDownloadUrl(imageUrl)
@@ -161,6 +163,11 @@ export class ProductImagesComponent implements OnInit {
         const filename: string = imageUrl.substring(indexEnd, indexStart);
         console.log(filename)
         return filename
+    }
+
+    onImageControl() {
+        console.log('onImageControl()')
+        this.router.navigateByUrl('image-control')
     }
 
 }

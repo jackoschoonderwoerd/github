@@ -9,6 +9,8 @@ import { FirestoreService } from 'src/app/shared/services/firestore.service';
 import { DocumentReference } from '@angular/fire/firestore';
 import { Category } from 'src/app/shared/models/category.model';
 import { FirebaseError } from '@angular/fire/app';
+import { MatSelectModule } from '@angular/material/select';
+import { take } from 'rxjs';
 
 @Component({
     selector: 'app-add-category',
@@ -19,7 +21,8 @@ import { FirebaseError } from '@angular/fire/app';
         MatFormFieldModule,
         MatButtonModule,
         MatInputModule,
-        MatDialogModule
+        MatDialogModule,
+        MatSelectModule
     ],
     templateUrl: './add-category.component.html',
     styleUrls: ['./add-category.component.scss']
@@ -27,7 +30,14 @@ import { FirebaseError } from '@angular/fire/app';
 export class AddCategoryComponent implements OnInit {
 
     form: FormGroup;
-    editmode: boolean = false
+    editmode: boolean = false;
+    orientations: string[] = [
+        'portrait',
+        'stretched-portrait',
+        'extra-stretched-portrait',
+        'landscape',
+        'square'
+    ]
 
     constructor(
         private fb: FormBuilder,
@@ -41,27 +51,36 @@ export class AddCategoryComponent implements OnInit {
         if (this.data && this.data.id) {
             this.editmode = true;
             const path = `categories/${this.data.id}`
-            this.fsService.getDoc(path).subscribe((category: Category) => {
-                this.form.setValue({
-                    ...category
+            this.fsService.getDoc(path).pipe(take(1)).subscribe((category: Category) => {
+                this.form.patchValue({
+                    id: category.id,
+                    name: category.name,
                 })
+                if (category.orientation) {
+                    this.form.patchValue({
+                        orientation: category.orientation
+                    })
+                }
             })
         }
         this.initForm()
-
     }
+
+
 
 
     initForm() {
         this.form = this.fb.group({
             id: new FormControl(null),
-            name: new FormControl('category name', [Validators.required])
+            name: new FormControl('category name', [Validators.required]),
+            orientation: new FormControl(null, [Validators.required])
         })
     }
     onAddCategory() {
         console.log(this.form.value)
         const name = this.form.value.name
-        const document = { name }
+        const orientation = this.form.value.orientation
+        const document = { name: name, orientation: orientation }
         if (this.editmode) {
             const pathToCategory = `categories/${this.data.id}`
             this.fsService.updateDocument(pathToCategory, document)

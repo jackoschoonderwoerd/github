@@ -72,11 +72,9 @@ export class CategoriesComponent implements OnInit {
     }
 
     onCategorySelected(categoryId: string) {
-        console.log(categoryId)
-
         this.store.dispatch(new ADMIN.SetCategoryId(categoryId))
-
     }
+
     onAddCategory() {
         this.dialog.open(AddCategoryComponent)
     }

@@ -26,7 +26,9 @@
             type="file"
             #fileInput
             (change)="onImageInputChange($event)">
+        <!-- <button mat-raised-button
+            (click)="fileInput.click()">add image</button> -->
         <button mat-raised-button
-            (click)="fileInput.click()">add image</button>
+            (click)="onImageControl()">image control</button>
     </div>
 </div>

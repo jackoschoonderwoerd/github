@@ -9,6 +9,7 @@
         <div class="form-field">
             <label for="id">id</label>
             <input type="text"
+                readonly
                 formControlName="id">
         </div>
         <div class="form-field">
@@ -16,9 +17,11 @@
             <input type="text"
                 formControlName="name">
         </div>
-        <div class="form-field">
+        <div class="form-field"
+            style="display: none;">
             <label for="name">image urls</label>
-            <input type="text"
+            <input readonly
+                type="text"
                 formControlName="imageUrls">
         </div>
         <div class="form-field">

@@ -1,0 +1,40 @@
+<div class="image-control-component">
+    <div class="product">
+        <div class="name">{{(product$|async)?.name}}</div>
+    </div>
+    <!-- <img [src]="imageSource()"
+        [height]="imageHeight()"
+        [width]="imageWidth()"
+        alt=""
+        class="mat-elevation-z5"> -->
+    <input #inputField
+        type="file"
+        hidden
+        (change)="fileSelected($event)"
+        (click)="inputField.value = ''">
+    <button mat-raised-button
+        (click)="inputField.click()"
+        color="primary">Select Photo</button>
+    <button mat-raised-button
+        (click)="onCancel()">Cancel</button>
+</div>
+
+
+<!-- <div class="image-control-component"
+    [style.width]="imageWidth() + 'px'">
+    <div class="product">
+        <div class="name">{{(product$|async)?.name}}</div>
+    </div>
+    <img [src]="imageSource()"
+        [height]="imageHeight()"
+        [width]="imageWidth()"
+        alt=""
+        class="mat-elevation-z5">
+    <input #inputField
+        type="file"
+        hidden
+        (change)="fileSelected($event)"
+        (click)="inputField.value = ''">
+    <button mat-raised-button
+        (click)="inputField.click()">Select Photo</button>
+</div> -->

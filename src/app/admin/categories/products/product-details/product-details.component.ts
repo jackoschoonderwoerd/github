@@ -7,7 +7,7 @@ import { ItemFormService } from './item-form.service';
 import { GeneralComponent } from './general/general.component';
 import { BassComponent } from './bass/bass.component';
 import { AmplifierComponent } from './amplifier/amplifier.component';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Category } from 'src/app/shared/models/category.model';
 import { FirestoreService } from 'src/app/shared/services/firestore.service';
 import { Observable } from 'rxjs';
@@ -30,7 +30,8 @@ import * as ADMIN from 'src/app/admin/admin-store/admin.actions';
         AmplifierComponent,
         FormsModule,
         MatButtonModule,
-        ProductImagesComponent
+        ProductImagesComponent,
+        RouterModule
     ],
     providers: [ItemFormService],
     templateUrl: './product-details.component.html',
@@ -63,6 +64,7 @@ export class ProductDetailsComponent implements OnInit {
                 this.category$ = this.fsService.getDoc(pathToCategory)
                 this.store.select(fromRoot.getAdminProductId).subscribe((productId: string) => {
                     if (productId) {
+                        console.log(productId)
                         this.editmode = true;
                         const pathToProduct = `categories/${categoryId}/products/${productId}`
                         this.product$ = this.fsService.getDoc(pathToProduct)

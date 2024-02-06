@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
+
 import { SlickCarouselModule } from 'ngx-slick-carousel';
-import { LargeImageComponent } from './large-image/large-image.component';
+
 import { Router } from '@angular/router';
 import * as fromRoot from './../../../../../app.reducer'
 import { Store } from '@ngrx/store';
@@ -28,7 +28,7 @@ export class CarouselComponent implements OnInit {
     };
 
     constructor(
-        private dialog: MatDialog,
+
         private router: Router,
         private store: Store<fromRoot.SuringarState>) { }
 
@@ -36,96 +36,99 @@ export class CarouselComponent implements OnInit {
 
 
     ngOnInit(): void {
-        this.store.select(fromRoot.getVisitorIndexCurrentSlide).subscribe((index: number) => {
-            if (index) {
-                console.log(index);
-                this.indexCurrentSlide = index;
-                this.slideConfig = {
-                    // dots: true,
-                    arrows: false,
-                    infinite: true,
-                    speed: 300,
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    initialSlide: index,
-                    lazyload: true,
-                    // "slidesToShow": 4,
-                    // "slidesToScroll": 4,
-                    // "fade": true,
-                    // "autoplay": false,
-                    // "dots": true,
-                    // "autoplaySpeed": 5000,
-                    // "pauseOnHover": true,
-                    // infinite: true,
-                    // "arrows": true,
-                    // "variableWidth": true,
-                    // "centerMode": true,
-                    // "centerPadding": '60px',
-                    "responsive": [
-                        // {
-                        //     "breakpoint": 992,
-                        //     "settings": {
-                        //         "arrows": true,
-                        //         "infinite": true,
-                        //         "slidesToShow": 1,
-                        //         "slidesToScroll": 1
-                        //     }
-                        // },
-                        // {
-                        //     "breakpoint": 768,
-                        //     "settings": {
-                        //         "arrows": true,
-                        //         "infinite": true,
-                        //         "slidesToShow": 1,
-                        //         "slidesToScroll": 1
-                        //     }
-                        // }
-                    ]
+        if (this.imgUrls) {
+            this.store.select(fromRoot.getVisitorIndexCurrentSlide).subscribe((index: number) => {
+                if (index) {
+                    console.log(index);
+                    this.indexCurrentSlide = index;
+                    this.slideConfig = {
+                        // dots: true,
+                        // arrows: false,
+                        infinite: true,
+                        speed: 300,
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        initialSlide: index,
+                        lazyload: true,
+                        prevArrow: false,
+                        nextArrow: false,
+                        // "slidesToShow": 4,
+                        // "slidesToScroll": 4,
+                        // "fade": true,
+                        // "autoplay": false,
+                        // "dots": true,
+                        // "autoplaySpeed": 5000,
+                        // "pauseOnHover": true,
+                        // infinite: true,
+                        // "arrows": true,
+                        // "variableWidth": true,
+                        // "centerMode": true,
+                        // "centerPadding": '60px',
+                        "responsive": [
+                            {
+                                "breakpoint": 992,
+                                "settings": {
+                                    // "arrows": true,
+                                    // "infinite": true,
+                                    // "slidesToShow": 1,
+                                    // "slidesToScroll": 1
+                                }
+                            },
+                            {
+                                "breakpoint": 768,
+                                "settings": {
+                                    // "arrows": true,
+                                    // "infinite": true,
+                                    // "slidesToShow": 1,
+                                    // "slidesToScroll": 1
+                                }
+                            }
+                        ]
+                    }
+                } else {
+                    this.slideConfig = {
+                        // dots: true,
+                        infinite: true,
+                        speed: 300,
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        initialSlide: 0,
+                        // "slidesToShow": 4,
+                        // "slidesToScroll": 4,
+                        // "fade": true,
+                        // "autoplay": false,
+                        // "dots": true,
+                        // "autoplaySpeed": 5000,
+                        // "pauseOnHover": true,
+                        // infinite: true,
+                        // "arrows": true,
+                        // "variableWidth": true,
+                        // "centerMode": true,
+                        // "centerPadding": '60px',
+                        "responsive": [
+                            // {
+                            //     "breakpoint": 992,
+                            //     "settings": {
+                            //         "arrows": true,
+                            //         "infinite": true,
+                            //         "slidesToShow": 1,
+                            //         "slidesToScroll": 1
+                            //     }
+                            // },
+                            // {
+                            //     "breakpoint": 768,
+                            //     "settings": {
+                            //         "arrows": true,
+                            //         "infinite": true,
+                            //         "slidesToShow": 1,
+                            //         "slidesToScroll": 1
+                            //     }
+                            // }
+                        ]
+                    }
                 }
-            } else {
-                this.slideConfig = {
-                    // dots: true,
-                    infinite: true,
-                    speed: 300,
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    initialSlide: 0,
-                    // "slidesToShow": 4,
-                    // "slidesToScroll": 4,
-                    // "fade": true,
-                    // "autoplay": false,
-                    // "dots": true,
-                    // "autoplaySpeed": 5000,
-                    // "pauseOnHover": true,
-                    // infinite: true,
-                    // "arrows": true,
-                    // "variableWidth": true,
-                    // "centerMode": true,
-                    // "centerPadding": '60px',
-                    "responsive": [
-                        // {
-                        //     "breakpoint": 992,
-                        //     "settings": {
-                        //         "arrows": true,
-                        //         "infinite": true,
-                        //         "slidesToShow": 1,
-                        //         "slidesToScroll": 1
-                        //     }
-                        // },
-                        // {
-                        //     "breakpoint": 768,
-                        //     "settings": {
-                        //         "arrows": true,
-                        //         "infinite": true,
-                        //         "slidesToShow": 1,
-                        //         "slidesToScroll": 1
-                        //     }
-                        // }
-                    ]
-                }
-            }
-        })
-
+            })
+        }
     }
 
     onLargeImage(imgUrl: string) {

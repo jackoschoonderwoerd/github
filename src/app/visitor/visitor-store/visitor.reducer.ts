@@ -37,14 +37,12 @@ export function visitorReducer(state = initialState, action: any) {
             }
         }
         case IMAGE_URL: {
-            console.log(action)
             return {
                 ...state,
                 imageUrl: action.imageUrl
             }
         }
         case INDEX_CURRENT_SLIDE: {
-            console.log(action)
             return {
                 ...state,
                 indexCurrentSlide: action.indexCurrentSlide

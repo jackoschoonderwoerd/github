@@ -85,6 +85,7 @@ export class ProductVisitorComponent implements OnInit {
 
     }
     onPreviousProduct() {
+        this.store.dispatch(new VISITOR.SetIndexCurrentSlide(null))
         const pathToProducts = `categories/${this.categoryId}/products`
         this.fsService.collection(pathToProducts).subscribe((products: Product[]) => {
             const index = products.findIndex((product: Product) => {
@@ -102,6 +103,7 @@ export class ProductVisitorComponent implements OnInit {
         })
     }
     onNextProduct() {
+        this.store.dispatch(new VISITOR.SetIndexCurrentSlide(null))
         const pathToProducts = `categories/${this.categoryId}/products`
         this.fsService.collection(pathToProducts).subscribe((products: Product[]) => {
             const index = products.findIndex((product: Product) => {

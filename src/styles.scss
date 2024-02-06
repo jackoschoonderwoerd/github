@@ -18,6 +18,7 @@ a {
 }
 * {
     box-sizing: border-box;
+    letter-spacing: 1.1px;
 }
 li {
     list-style: none;
@@ -61,7 +62,7 @@ li {
         gap: 0.5rem;
         .form-field {
             display: grid;
-            grid-template-columns: 8rem 1fr;
+            grid-template-columns: 11rem 1fr;
             // display: flex;
             // justify-content: space-between;
         }

@@ -42,6 +42,27 @@ export class StorageService {
             console.log('can\'t store object due to insufficient data');
         }
     }
+
+    storeBlob(path: string, blob: Blob) {
+        if (path && blob) {
+            // console.log(path, file)
+            const storageRef = ref(this.storage, path);
+            return uploadBytesResumable(storageRef, blob)
+                .then((data: any) => {
+                    // console.log(data)
+                    return getDownloadURL(storageRef)
+                })
+            // .then((url: string) => {
+            //     // console.log(url)
+            //     return url
+            // })
+        } else {
+            console.log('can\'t store object due to insufficient data');
+        }
+    }
+
+
+
     deleteObject(path) {
         if (path) {
             const storageRef = ref(this.storage, path)
